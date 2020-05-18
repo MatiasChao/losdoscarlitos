@@ -3,8 +3,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
 
-import OrderListStack from '../screens/OrderListStack'
-import NewOrderStack from '../screens/NewOrderStack'
+import OrderListStack from './OrderListStack'
+import NewOrderStack from './NewOrderStack'
+import AccountStack from './AccountStack'
 
 const Tab = createBottomTabNavigator();
 
@@ -22,14 +23,19 @@ export default function Navigation() {
                 }) }
             >
                 <Tab.Screen 
-                    name = "orderListStack" 
-                    component = { OrderListStack } 
-                    options = {{ title: 'Mis Pedidos' }} 
+                    name = "accountStack" 
+                    component = { AccountStack } 
+                    options = {{ title: 'Mi Cuenta' }} 
                 />
                 <Tab.Screen 
                     name = "newOrderStack" 
                     component = { NewOrderStack } 
                     options = {{ title: 'Nuevo Pedido' }} 
+                />
+                <Tab.Screen x
+                    name = "orderListStack" 
+                    component = { OrderListStack } 
+                    options = {{ title: 'Mis Pedidos' }} 
                 />
             </Tab.Navigator>
         </NavigationContainer>
@@ -45,6 +51,9 @@ function screenOptions(route, color) {
             break;
         case "newOrderStack":
             iconName = "newspaper-plus"
+            break;
+        case "accountStack":
+            iconName = "account"
             break;
         default:
             break;

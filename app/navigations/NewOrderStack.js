@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Order from './Order'
+import Order from '../screens/Order'
 
 const Stack = createStackNavigator()
 
