@@ -2,17 +2,48 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements'
 import { validateEmail } from '../../utils/validations'
+import { size, isEmpty } from 'lodash'
+import * as firebase from 'firebase'
+import { useNavigation } from '@react-navigation/native'
+import Loading from '../Loading'
 
-export default function RegisterForm() {
+export default function RegisterForm(props) {
+
+    const { toastRef } = props
 
     const [showPassword, setShowPassword] = useState(false)
     const [showRepeatPassword, setShowRepeatPassword] = useState(false)
     const [formData, setFormData] = useState(defaultFormValue())
+    const [loading, setLoading] = useState(false)
+
+    const navigation = useNavigation()
 
     const onSubmit = () => {
-        console.log(formData)
-
-        console.log(validateEmail(formData.email))
+        if(isEmpty(formData.email) || isEmpty(formData.password) || isEmpty(formData.repeatPassword)) {
+           toastRef.current.show("Todos los campos son obligatorios!")
+        } else if (!validateEmail(formData.email)) {
+            toastRef.current.show("El email no es correcto")
+        } else if(formData.password !== formData.repeatPassword) {
+            toastRef.current.show("Las contraseñas deben ser iguales")
+        } 
+        else if(size(formData.password) < 6) {
+            toastRef.current.show("La contraseña tiene que tener al menos 6 carácteres")
+        } 
+        else {
+            setLoading(true)
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(formData.email, formData.password)
+                .then(response => {
+                    console.log(response)
+                    setLoading(false)
+                    navigation.navigate('account')
+                })
+                .catch(() => {
+                    setLoading(false)
+                    toastRef.current.show('El email ya esta en uso, purebe con otro')
+                })
+        }
     }
 
     const onChange = (e, type) => {
@@ -71,6 +102,10 @@ export default function RegisterForm() {
                 containerStyle = { styles.btnContainerRegister }
                 buttonStyle = { styles.btnRegister }
                 onPress = { onSubmit }
+            />
+            <Loading
+                isVisible = { loading }
+                text = 'Creando cuenta'
             />
         </View>
     )
