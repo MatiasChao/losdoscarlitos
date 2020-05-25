@@ -29,7 +29,7 @@ export default function Login() {
             <Toast 
                 ref = { toastRef }
                 position = 'center'
-                opacity = { 0,9 }
+                opacity = { 0.9 }
             />
         </ScrollView>
     )
