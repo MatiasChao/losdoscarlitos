@@ -14,7 +14,6 @@ export default function UserLogged() {
     const toastRef = useRef()
 
     useEffect(() => {
-
         (async () => {
             const user = await firebase.auth().currentUser
             setUserInfo(user)
@@ -29,6 +28,7 @@ export default function UserLogged() {
                 userInfo &&
                 <InfoUser 
                     userInfo = { userInfo }
+                    toastRef = { Toast }
                 />
             }
 
