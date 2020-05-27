@@ -1,15 +1,18 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import * as firebase from 'firebase'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
+import { result } from 'lodash'
 
 export default function InfoUser (props) {
 
     const {
-        userInfo: { photoUrl, displayName, email },
-        toastRef
+        userInfo: { uid, photoURL, displayName, email },
+        toastRef,
+        setLoading,
+        setLoadingText
     } = props
 
     const changeAvatar = async () => {
@@ -23,7 +26,47 @@ export default function InfoUser (props) {
                 allowsEditing: true,
                 aspect: [4, 3]
             })
+
+            if(result.cancelled) {
+                toastRef.current.show('Has cerrado la selección de imagen')
+            } else {
+                uploadImageToFirebase(result.uri)
+                    .then(() => {
+                        updatePhotoUrl()
+                    }).catch(() => {
+                        toastRef.current.show('Error al actualizar el avatar')
+                    })
+            }
         }
+    }
+
+    const uploadImageToFirebase = async (uri) => {
+        setLoadingText('Actualiando avatar')
+        setLoading(true)
+        const response = await fetch(uri)
+
+        const blob = await response.blob()
+
+        const ref = firebase.storage().ref().child(`avatar/${uid}`)
+
+        return ref.put(blob)
+    }
+
+    const updatePhotoUrl = () => {
+        firebase
+            .storage()
+            .ref(`avatar/${uid}`)
+            .getDownloadURL()
+            .then(async (response) => {
+                const update = {
+                    photoURL: response
+                }
+                await firebase.auth().currentUser.updateProfile(update)
+                setLoading(false)
+            })
+            .catch(() => {
+                toastRef.current.show('Error al actualizar el avatar')
+            })
     }
 
     return ( 
@@ -31,22 +74,22 @@ export default function InfoUser (props) {
             <Avatar 
                 rounded 
                 size = 'large'
-                showEditButton 
-                onEditPress = { changeAvatar() }
+                showAccessory
+                onPress = { changeAvatar }
                 containerStyle = { styles.userInfoAvatar }
                 source = { 
-                    photoUrl ? { url: photoUrl } :
+                    photoURL ? { uri: photoURL } :
                     require('../../../assets/img/avatar.jpg')
                 }
             /> 
-            <View >
-            <Text style = { styles.displayName }>
-                { displayName ? displayName : 'Anónimo' }
-            </Text> 
-            <Text >
-                { email ? email : 'Social Login' }
-            </Text> 
-        </View > 
+            <View>
+                <Text style = { styles.displayName }>
+                    { displayName ? displayName : 'Anónimo' }
+                </Text> 
+                <Text>
+                    { email ? email : 'Social Login' }
+                </Text> 
+        </View> 
         </View>
     )
 }

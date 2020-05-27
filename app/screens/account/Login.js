@@ -12,17 +12,17 @@ export default function Login() {
     return(
         <ScrollView> 
             <Image 
-                source={require('../../../assets/img/logo.png')} 
-                resizeMode='contain'
-                style={styles.logo}
+                source = {require('../../../assets/img/logo.png')} 
+                resizeMode = 'contain'
+                style = { styles.logo }
             />
-            <View style={styles.viewCointainer}>
+            <View style = { styles.viewCointainer }>
                 <LoginForm 
                     toastRef = { toastRef }
                 />
                 <CreateAccount />
             </View>
-            <Divider style={styles.divider} />
+            <Divider style = { styles.divider } />
             <Text>
                 Social Login
             </Text>
