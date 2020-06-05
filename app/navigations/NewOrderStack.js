@@ -4,6 +4,7 @@ import Order from '../screens/Order'
 import { Button, Icon } from 'react-native-elements'
 import { StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import OrderList from '../screens/OrderList'
 import ArticleList from '../screens/ArticleList'
 
 const Stack = createStackNavigator()
@@ -27,7 +28,7 @@ export default function NewOrderStack() {
                           buttonStyle = { styles.btn }
                           icon={
                             <Icon
-                              name="cart"
+                              name="cart-arrow-right"
                               type="material-community"
                               size={20}
                               color="white"

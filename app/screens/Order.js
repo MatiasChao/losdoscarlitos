@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking } from 'react-native'
 import { Input, Button, Icon, CheckBox, Overlay } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
+import Toast from 'react-native-easy-toast'
 import { firebaseApp } from '../utils/firebase'
 import firebase from 'firebase/app'
 import Loading from '../components/Loading'
@@ -15,6 +16,7 @@ const db = firebase.firestore(firebaseApp)
 export default function Order({ route }) {
 
     const nagivation = useNavigation()
+    const toastRef = useRef()
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [listArticles, setListArticles] = useState([])
@@ -39,7 +41,7 @@ export default function Order({ route }) {
 
         // nos traemos la info del usuario logueado
         // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
-        //con esa variable guardada chequeo asi no lo vuelvo a llamar
+        // con esa variable guardada chequeo asi no lo vuelvo a llamar
        firebase
             .auth()
             .onAuthStateChanged((userInfo) => {
@@ -49,7 +51,6 @@ export default function Order({ route }) {
 
     const onChangeSetState = (e, type) => {
 
-        let articles = []
         if(type === 'listArticle') {
             state.listArticle.push(e)
             return setState({
@@ -87,12 +88,11 @@ export default function Order({ route }) {
             .then(() => {
                 setIsLoading(false)
                 console.log("OK")
-                nagivation.navigate('articleList')
-                // aca lo puedo mandar a la lista de pedidos..
+                nagivation.navigate('orderList') // cuando envia el pedido lo mandamos a la lista de pedidos enviados
             })
             .catch(() => {
                 setIsLoading(false)
-                //toastRef.current.show('Error al intentar guardar el pedido, intentelo nuevamente')
+                toastRef.current.show('Error al intentar guardar el pedido, intentelo nuevamente')
             })
     }
 
@@ -110,6 +110,7 @@ export default function Order({ route }) {
     const sendOrder = () => {
         console.log("ENVIAR PEDIDO........")
         console.log("STATE: " , state)
+        uploadOrderFirebase()
     }
 
     return(
