@@ -9,14 +9,16 @@ const db = firebase.firestore(firebaseApp)
 
 export default function ArticleList({ route }) {
 
-    const { prueba } = route.params
-    console.log("prueba: ", prueba)
-
     const [articles, setArticles] = useState([])
     const [countArticles, setCountArticles] = useState(0)
     const [startArticles, setStartArticles] = useState(null)
     const limitArticles = 10
 
+    const {
+        state
+    } = route.params
+    
+    /*
     useEffect(() => {
         db.collection('articles').get().then((snap) => {
             countArticles(snap.size)
@@ -41,11 +43,12 @@ export default function ArticleList({ route }) {
             })
 
     }, [])
+    */
 
     return(
         <View>
             <Text>ArticleList</Text>
-            <Text>Ir agregando al carrito.... {prueba}</Text>
+            <Text>Ir agregando al carrito.... {state.name}</Text>
         </View>
     )
 }

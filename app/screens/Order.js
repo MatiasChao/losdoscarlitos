@@ -12,7 +12,7 @@ import { State } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 const db = firebase.firestore(firebaseApp)
 
-export default function Order({ route }, props) {
+export default function Order({ route }) {
 
     const nagivation = useNavigation()
     const [user, setUser] = useState(null)
@@ -20,40 +20,22 @@ export default function Order({ route }, props) {
     const [listArticles, setListArticles] = useState([])
     const [showArticleModal, setShowArticleModal] = useState(false)
     
+    const [state, setState] = useState({
+        name: '',
+        listArticle: [],
+        observation: '',
+        userLogged: '',
+        createDate: new Date(),
+        createBy: ''
+    })
 
     const [article, setArticle] = useState({
         articleName: '',
         articleWeightType: '',
         articleCount: ''
     })
-   
-    const [formData, setFormData] = useState({
-        name: '',
-        count: '',
-        article: '',
-        typeWeight: '',
-        observation: '',
-    })
-
-    /*
-    const {
-        name,
-        listArticle,
-        observation,
-        userLogged,
-        dispatch
-    } = route.params
-    */
-
-    const {
-        state,
-        dispatch
-    } = route.params
-    
 
     useEffect(() => {
-        console.log("ROUTE", state)
-        //dispatch({type: 'TEST', name: 'xD' });
 
         // nos traemos la info del usuario logueado
         // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
@@ -65,24 +47,29 @@ export default function Order({ route }, props) {
             })
     }, [])
 
-    const onChange = (e, type) => {
-        console.log("OK", e, type)
-        return setFormData({
-            ...formData, 
+    const onChangeSetState = (e, type) => {
+
+        let articles = []
+        if(type === 'listArticle') {
+            state.listArticle.push(e)
+            return setState({
+                ...state, 
+            }) 
+        }
+
+        return setState({
+            ...state, 
             [type]: e
         })
     }
 
-    const onChangeArticleValue = (e, type) => {
+    const onChangeSetArticle = (e, type) => {
         return setArticle({
             ...article, 
             [type]: e
         })
     }
-
-    //TODO: ver que era firebase.auth().current.uid 
    
-
     // esta funcion me va a guardar la orden en la base de dato del firebase
     const uploadOrderFirebase = () => {
         setIsLoading(true)
@@ -94,7 +81,6 @@ export default function Order({ route }, props) {
                 name: '',
                 listArticle: [],
                 observation: '',
-                userLogged: '', // obtener nombre del usuario logueado,
                 createDate: new Date(),
                 createBy: firebase.auth().currentUser.uid
             })
@@ -109,23 +95,20 @@ export default function Order({ route }, props) {
                 //toastRef.current.show('Error al intentar guardar el pedido, intentelo nuevamente')
             })
     }
-    
 
     const addArticle = () => {
-
-        console.log("AddArticle -> ", article)
-
         // validar que no hayan campos vacios
-
-        dispatch({type: 'PUSH_ARTICLE_TO_LIST', value: article });
-
+        if(article.articleName === '' && article.articleWeightType === '' && articleCount === '') {
+            // muestro mensaje de error
+        } else {
+            // lo agrego a la lista..
+            onChangeSetState(article, 'listArticle')
+        }
         setShowArticleModal(false)
     }
 
     const sendOrder = () => {
         console.log("ENVIAR PEDIDO........")
-        dispatch({type: 'CHANGE_NAME_ORDER', name: 'xD' });
-        console.log("ARTICLE: ", article)
         console.log("STATE: " , state)
     }
 
@@ -135,9 +118,9 @@ export default function Order({ route }, props) {
                 <Input 
                     placeholder = 'Nombre'
                     containerStyle = { styles.inputName }
-                    onChange = { e => dispatch({type: 'CHANGE_NAME_ORDER', name: e.nativeEvent.text }) }
+                    onChange = { e => onChangeSetState(e.nativeEvent.text, 'name') }
                 />
-            </View>
+            </View> 
 
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Button
@@ -154,11 +137,20 @@ export default function Order({ route }, props) {
                 />
             </View>
 
+            <Text>
+                {
+                    state.listArticle && 
+                    state.listArticle.map((article, i) => {
+                        <Text key={i}> { article } </Text>
+                    })
+                }
+            </Text>
+
             <View>
                 <Input 
                     placeholder = 'Observaciones'
                     containerStyle = { styles.inputObservation }
-                    onChange = { e => onChange(e.nativeEvent.text, 'observation') }
+                    onChange = { e => onChangeSetState(e.nativeEvent.text, 'observation') }
                 />
             </View>
 
@@ -174,7 +166,7 @@ export default function Order({ route }, props) {
 
             <ArticleModal 
                 showArticleModal = { showArticleModal } 
-                onChangeArticleValue={(e, type) => onChangeArticleValue(e, type)}
+                onChangeSetArticle={(e, type) => onChangeSetArticle(e, type)}
                 addArticle = { addArticle }
                 setShowArticleModal = { setShowArticleModal }
                 article = { article }
@@ -192,7 +184,7 @@ const ArticleModal = (props) => {
         
     const {
         showArticleModal,
-        onChangeArticleValue,
+        onChangeSetArticle,
         addArticle,
         setShowArticleModal,
         article
@@ -204,7 +196,7 @@ const ArticleModal = (props) => {
                 <Input 
                     placeholder = 'Artículo'
                     containerStyle = { styles.input }
-                    onChange = { e => onChangeArticleValue(e.nativeEvent.text, 'articleName') }
+                    onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleName') }
                 />
                 <View style = { styles.container }>
                     <CheckBox
@@ -214,7 +206,7 @@ const ArticleModal = (props) => {
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
                         checked={article.articleWeightType === 'kilogramo'}
-                        onPress = { e => onChangeArticleValue('kilogramo', 'articleWeightType') }
+                        onPress = { e => onChangeSetArticle('kilogramo', 'articleWeightType') }
                     />
                     <CheckBox
                         center
@@ -223,7 +215,7 @@ const ArticleModal = (props) => {
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
                         checked={article.articleWeightType === 'tira'}
-                        onPress = { e => onChangeArticleValue('tira', 'articleWeightType') }
+                        onPress = { e => onChangeSetArticle('tira', 'articleWeightType') }
                     />
                 </View>
                 <View style = { styles.container }>
@@ -234,13 +226,13 @@ const ArticleModal = (props) => {
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
                         checked={article.articleWeightType === 'unidad'}
-                        onPress = { e => onChangeArticleValue('unidad', 'articleWeightType') }
+                        onPress = { e => onChangeSetArticle('unidad', 'articleWeightType') }
                     />
                 </View>
                 <Input 
                     placeholder = 'Cantidad'
                     containerStyle = { styles.input }
-                    onChange = { e => onChangeArticleValue(e.nativeEvent.text, 'articleCount') }
+                    onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
                 />
                 <Button 
                     title = 'Agregar artículo'

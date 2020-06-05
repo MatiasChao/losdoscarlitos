@@ -1,26 +1,16 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Order from '../screens/Order'
 import { Button, Icon } from 'react-native-elements'
 import { StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import ArticleList from '../screens/ArticleList'
-import NewOrderStackReducer from '../reducers/NewOrderStackReducer'
 
 const Stack = createStackNavigator()
 
 export default function NewOrderStack() {
 
     const nagivation = useNavigation()
-
-    const [state, dispatch] = useReducer(NewOrderStackReducer, {
-        name: '',
-        listArticle: [],
-        observation: '',
-        userLogged: '',
-        createDate: '',
-        createBy: ''
-    }) 
 
     return(
        <Stack.Navigator>
@@ -31,10 +21,7 @@ export default function NewOrderStack() {
                     title: 'Nota de Pedido',
                     headerRight: () => (
                         <Button
-                          onPress={() => nagivation.navigate('articleList', {
-                              state : state,
-                              dispatch : dispatch
-                          })}
+                          onPress={() => nagivation.navigate('articleList')}
                           color="#fff"
                           containerStyle={styles.btnContainer}
                           buttonStyle = { styles.btn }
@@ -49,7 +36,6 @@ export default function NewOrderStack() {
                         />
                       )
                 }}
-                initialParams={{ state: state, dispatch: dispatch }}
            />
             <Stack.Screen
                 name = 'articleList'
