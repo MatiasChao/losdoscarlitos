@@ -20,6 +20,7 @@ export default function NewOrderStack() {
                 component = { Order }
                 options = {{ 
                     title: 'Nota de Pedido',
+                    /*
                     headerRight: () => (
                         <Button
                           onPress={() => nagivation.navigate('articleList')}
@@ -36,6 +37,7 @@ export default function NewOrderStack() {
                           }
                         />
                       )
+                      */
                 }}
            />
             <Stack.Screen

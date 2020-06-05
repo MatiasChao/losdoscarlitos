@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking } from 'react-native'
-import { Input, Button, Icon, CheckBox, Overlay } from 'react-native-elements'
+import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking, TouchableOpacity } from 'react-native'
+import { Input, Button, Icon, CheckBox, Overlay, ListItem } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
 import Toast from 'react-native-easy-toast'
 import { firebaseApp } from '../utils/firebase'
@@ -123,18 +123,26 @@ export default function Order({ route }) {
                 />
             </View> 
 
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Button
-                    containerStyle = { styles.btnOpenModalArticle }
-                    buttonStyle = { styles.btnOpenModalStyle }
-                    icon={{
+            <View>
+                <ListItem
+                    title = { 'Agregar artículo' }
+                    leftIcon = {{ 
                         name: "plus",
-                        type: 'material-community',
-                        size: 20,
-                        color: "white"
+                        type: 'material-community'
                     }}
-                    title="agregar artículo"
+                    chevron
+                    containerStyle = { styles.menuItem }
                     onPress = { () => setShowArticleModal(true) }
+                />
+                <ListItem
+                    title = { 'Ver artículos agregados' }
+                    leftIcon = {{ 
+                        name: "cart",
+                        type: 'material-community'
+                    }}
+                    chevron
+                    containerStyle = { styles.menuItem }
+                    onPress={() => nagivation.navigate('articleList')}
                 />
             </View>
 
@@ -297,12 +305,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 30
     },
-    btnOpenModalArticle: {
-        backgroundColor: '#00a680',
-        marginTop: 40,
-        marginBottom: 20
-    },
-    btnOpenModalStyle: {
-        backgroundColor: '#00a680'
+    menuItem: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#e3e3e3'
     }
 })

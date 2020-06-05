@@ -41,8 +41,8 @@ export default function OrderList() {
 
     return(
         <View>
-            <Text>ArticleList</Text>
-            <Text>Ir agregando al carrito....</Text>
+            <Text>OrderList</Text>
+            <Text>Ver la cantidad de Pedidos por Clientes, por fechas</Text>
         </View>
     )
 }
