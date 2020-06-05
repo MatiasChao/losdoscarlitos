@@ -1,96 +1,166 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking } from 'react-native'
-import { Input, Button, Icon, CheckBox } from 'react-native-elements'
+import { Input, Button, Icon, CheckBox, Overlay } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
 import { firebaseApp } from '../utils/firebase'
 import firebase from 'firebase/app'
 import Loading from '../components/Loading'
 import qs from 'qs';
+import { productos } from '../utils/constants'
+import 'firebase/firestore'
+import { State } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
+const db = firebase.firestore(firebaseApp)
 
-export default function Order(props) {
+export default function Order({ route }, props) {
 
+    const nagivation = useNavigation()
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [listArticles, setListArticles] = useState([])
+    const [showArticleModal, setShowArticleModal] = useState(false)
+    
+
+    const [article, setArticle] = useState({
+        articleName: '',
+        articleWeightType: '',
+        articleCount: ''
+    })
    
     const [formData, setFormData] = useState({
+        name: '',
         count: '',
         article: '',
         typeWeight: '',
-        observation: ''
-    })  
+        observation: '',
+    })
+
+    /*
+    const {
+        name,
+        listArticle,
+        observation,
+        userLogged,
+        dispatch
+    } = route.params
+    */
+
+    const {
+        state,
+        dispatch
+    } = route.params
     
-   const [count, setCount] = useState('')
-   const [article, setArticle] = useState('')
-   const [typeWeight, setTypeWeight] = useState('')
-   const [observation, setObservation] = useState('')
 
     useEffect(() => {
+        console.log("ROUTE", state)
+        //dispatch({type: 'TEST', name: 'xD' });
 
         // nos traemos la info del usuario logueado
+        // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
+        //con esa variable guardada chequeo asi no lo vuelvo a llamar
        firebase
             .auth()
             .onAuthStateChanged((userInfo) => {
-                console.log(userInfo)
                 setUser(userInfo)
             })
     }, [])
 
-    export async function sendEmail(to, subject, body, options = {}) {
-        const { cc, bcc } = options;
-    
-        let url = `mailto:${to}`;
-    
-        // Create email link query
-        const query = qs.stringify({
-            subject: subject,
-            body: body,
-            cc: cc,
-            bcc: bcc
-        });
-    
-        if (query.length) {
-            url += `?${query}`;
-        }
-    
-        // check if we can use this link
-        const canOpen = await Linking.canOpenURL(url);
-    
-        if (!canOpen) {
-            throw new Error('Provided URL can not be handled');
-        }
-    
-        return Linking.openURL(url);
-    }
-
-    
     const onChange = (e, type) => {
-        console.log("OK")
+        console.log("OK", e, type)
         return setFormData({
             ...formData, 
             [type]: e
         })
     }
+
+    const onChangeArticleValue = (e, type) => {
+        return setArticle({
+            ...article, 
+            [type]: e
+        })
+    }
+
+    //TODO: ver que era firebase.auth().current.uid 
+   
+
+    // esta funcion me va a guardar la orden en la base de dato del firebase
+    const uploadOrderFirebase = () => {
+        setIsLoading(true)
+
+
+        // CHEQUEAR QUE LOS CAMPOS NO SEAN VACIOS !!!
+        db.collection('orders')
+            .add({
+                name: '',
+                listArticle: [],
+                observation: '',
+                userLogged: '', // obtener nombre del usuario logueado,
+                createDate: new Date(),
+                createBy: firebase.auth().currentUser.uid
+            })
+            .then(() => {
+                setIsLoading(false)
+                console.log("OK")
+                nagivation.navigate('articleList')
+                // aca lo puedo mandar a la lista de pedidos..
+            })
+            .catch(() => {
+                setIsLoading(false)
+                //toastRef.current.show('Error al intentar guardar el pedido, intentelo nuevamente')
+            })
+    }
     
 
-    const sendOrder = () => {
-        console.log("enviar pedido...")
-        console.log(formData)
+    const addArticle = () => {
 
-        let mail = require('../utils/mail')
-        router.post('/email', mail.sendEmail);
+        console.log("AddArticle -> ", article)
+
+        // validar que no hayan campos vacios
+
+        dispatch({type: 'PUSH_ARTICLE_TO_LIST', value: article });
+
+        setShowArticleModal(false)
+    }
+
+    const sendOrder = () => {
+        console.log("ENVIAR PEDIDO........")
+        dispatch({type: 'CHANGE_NAME_ORDER', name: 'xD' });
+        console.log("ARTICLE: ", article)
+        console.log("STATE: " , state)
     }
 
     return(
         <ScrollView style = { styles.scrollView }>
-            
-            <FormAdd
-                setCount = { setCount }
-                setArticle = { setArticle }
-                setWeight = { setWeight }
-                setTypeWeight = { setTypeWeight }
-                setObservation = { setObservation }
-                onChange={(e, type) => onChange(e, type)}
-            />
+            <View>
+                <Input 
+                    placeholder = 'Nombre'
+                    containerStyle = { styles.inputName }
+                    onChange = { e => dispatch({type: 'CHANGE_NAME_ORDER', name: e.nativeEvent.text }) }
+                />
+            </View>
+
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Button
+                    containerStyle = { styles.btnOpenModalArticle }
+                    buttonStyle = { styles.btnOpenModalStyle }
+                    icon={{
+                        name: "plus",
+                        type: 'material-community',
+                        size: 20,
+                        color: "white"
+                    }}
+                    title="agregar artículo"
+                    onPress = { () => setShowArticleModal(true) }
+                />
+            </View>
+
+            <View>
+                <Input 
+                    placeholder = 'Observaciones'
+                    containerStyle = { styles.inputObservation }
+                    onChange = { e => onChange(e.nativeEvent.text, 'observation') }
+                />
+            </View>
 
             {
                 user && 
@@ -101,71 +171,85 @@ export default function Order(props) {
                     onPress = { sendOrder }
                 />
             }
-            <Loading isVisible = { isLoading } text = 'Enviando pedido' />
+
+            <ArticleModal 
+                showArticleModal = { showArticleModal } 
+                onChangeArticleValue={(e, type) => onChangeArticleValue(e, type)}
+                addArticle = { addArticle }
+                setShowArticleModal = { setShowArticleModal }
+                article = { article }
+            />
+
+        
+
+        <Loading isVisible = { isLoading } text = 'Enviando pedido' />
+            
         </ScrollView>
     )
 }
 
-function FormAdd(props) {
-
+const ArticleModal = (props) => {
+        
     const {
-        setCount,
-        setArticle,
-        setTypeWeight,
-        setObservation,
-        onChange
+        showArticleModal,
+        onChangeArticleValue,
+        addArticle,
+        setShowArticleModal,
+        article
     } = props
 
     return (
-        <View style = { styles.viewForm }>    
-            <Input 
-                placeholder = 'Comercio'
-                containerStyle = { styles.input }
-                onChange = { e => onChange(e.nativeEvent.text, 'count') }
-            />
-            <Input 
-                placeholder = 'Cantidad'
-                containerStyle = { styles.input }
-                onChange = { e => onChange(e.nativeEvent.text, 'count') }
-            />
-            <View style = { styles.container }>
-                <CheckBox
-                    center
-                    title='Kilogramo'
-                    checkedIcon='dot-circle-o'
-                    uncheckedIcon='circle-o'
-                    containerStyle = { styles.checkbox }
-                    checked={true}
+        <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
+            <View style = { styles.viewForm }>    
+                <Input 
+                    placeholder = 'Artículo'
+                    containerStyle = { styles.input }
+                    onChange = { e => onChangeArticleValue(e.nativeEvent.text, 'articleName') }
                 />
-                <CheckBox
-                    center
-                    title='Tira'
-                    checkedIcon='dot-circle-o'
-                    uncheckedIcon='circle-o'
-                    containerStyle = { styles.checkbox }
-                    checked={false}
+                <View style = { styles.container }>
+                    <CheckBox
+                        center
+                        title='Kilogramo'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = { styles.checkbox }
+                        checked={article.articleWeightType === 'kilogramo'}
+                        onPress = { e => onChangeArticleValue('kilogramo', 'articleWeightType') }
+                    />
+                    <CheckBox
+                        center
+                        title='Tira'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = { styles.checkbox }
+                        checked={article.articleWeightType === 'tira'}
+                        onPress = { e => onChangeArticleValue('tira', 'articleWeightType') }
+                    />
+                </View>
+                <View style = { styles.container }>
+                    <CheckBox
+                        center
+                        title='Unidad'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = { styles.checkbox }
+                        checked={article.articleWeightType === 'unidad'}
+                        onPress = { e => onChangeArticleValue('unidad', 'articleWeightType') }
+                    />
+                </View>
+                <Input 
+                    placeholder = 'Cantidad'
+                    containerStyle = { styles.input }
+                    onChange = { e => onChangeArticleValue(e.nativeEvent.text, 'articleCount') }
                 />
-                <CheckBox
-                    center
-                    title='Unidad'
-                    checkedIcon='dot-circle-o'
-                    uncheckedIcon='circle-o'
-                    containerStyle = { styles.checkbox }
-                    checked={false}
+                <Button 
+                    title = 'Agregar artículo'
+                    containerStyle = { styles.btnAddArticle }
+                    buttonStyle = { styles.btnSendOrder }
+                    onPress = { () => addArticle() }
                 />
             </View>
-           
-             <Input 
-                placeholder = 'Articulo'
-                containerStyle = { styles.input }
-                onChange = { e => setArticle(e.nativeEvent.text) }
-            />
-            <Input 
-                placeholder = 'Observaciones'
-                containerStyle = { styles.input }
-                onChange = { e => setArticle(e.nativeEvent.text) }
-            />
-        </View>
+        </Overlay>
     )
 }
 
@@ -175,7 +259,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     btnContainer: {
-        marginTop: 20,
+        marginTop: 50,
         width: '90%',
         marginLeft: '5%'
     },
@@ -184,11 +268,14 @@ const styles = StyleSheet.create({
     },
     viewForm: {
         marginLeft: 10,
-        marginRight: 10,
-        backgroundColor: '#fff'
+        marginRight: 10
     },
     input: {
         marginBottom: 10
+    },
+    inputName: {
+        marginBottom: 20,
+        marginTop: 10
     },
     textArea: {
         height: 70,
@@ -206,5 +293,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignSelf: 'flex-start',
         alignItems: 'center'
+    },
+    btnAddArticle: {
+        marginTop: 10,
+        width: '90%',
+        marginLeft: '5%',
+        marginBottom: 15
+    },
+    inputObservation: {
+        marginBottom: 20,
+        marginTop: 30
+    },
+    btnOpenModalArticle: {
+        backgroundColor: '#00a680',
+        marginTop: 40,
+        marginBottom: 20
+    },
+    btnOpenModalStyle: {
+        backgroundColor: '#00a680'
     }
 })
