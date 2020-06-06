@@ -11,6 +11,7 @@ import { productos } from '../utils/constants'
 import 'firebase/firestore'
 import { State } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import ModalTest from '../modals/ModalTest'
 const db = firebase.firestore(firebaseApp)
 
 export default function Order({ route }) {
@@ -143,6 +144,7 @@ export default function Order({ route }) {
                     containerStyle = { styles.menuItem }
                     onPress = { () => showArticleModalFn() }
                 />
+
                 <ListItem
                     title = { 'Ver artículos agregados' }
                     leftIcon = {{ 
@@ -154,6 +156,8 @@ export default function Order({ route }) {
                     onPress={() => nagivation.navigate('articleList', {
                         listArticle : state.listArticle
                     })}
+                    disabled = { state.listArticle == 0 }
+                    disabledStyle={{backgroundColor: '#f2f2f2' }}
                 />
             </View>
 
