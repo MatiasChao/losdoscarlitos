@@ -22,12 +22,12 @@ export default function Order({ route }) {
     const [listArticles, setListArticles] = useState([])
     const [showArticleModal, setShowArticleModal] = useState(false)
     const [showAddArticleError, setShowAddArticleError] = useState(false)
+    const [errorName, showErrorName] = useState(false)
     
     const [state, setState] = useState({
         name: '',
         listArticle: [],
         observation: '',
-        userLogged: '',
         createDate: new Date(),
         createBy: ''
     })
@@ -114,7 +114,12 @@ export default function Order({ route }) {
     const sendOrder = () => {
         console.log("ENVIAR PEDIDO........")
         console.log("STATE: " , state)
-        uploadOrderFirebase()
+
+        if(state.name === '') {
+            showErrorName(true)
+        }
+
+        //uploadOrderFirebase()
     }
 
     return(
@@ -168,6 +173,11 @@ export default function Order({ route }) {
                     onChange = { e => onChangeSetState(e.nativeEvent.text, 'observation') }
                 />
             </View>
+
+            {
+                errorName && 
+                <Text>El nombre no puede ser vacio</Text>   
+            }
 
             {
                 user && 

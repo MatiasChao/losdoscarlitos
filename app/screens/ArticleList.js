@@ -28,6 +28,7 @@ export default function ArticleList({ route }) {
                         chevron
                         containerStyle = { styles.menuItem }
                             // on press tiene que abrir pa modificar
+                            // tiene que llamar a ArticleModal
                     />
                 ))
             }
