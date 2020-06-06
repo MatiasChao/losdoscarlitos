@@ -21,6 +21,7 @@ export default function Order({ route }) {
     const [isLoading, setIsLoading] = useState(false)
     const [listArticles, setListArticles] = useState([])
     const [showArticleModal, setShowArticleModal] = useState(false)
+    const [showAddArticleError, setShowAddArticleError] = useState(false)
     
     const [state, setState] = useState({
         name: '',
@@ -96,15 +97,18 @@ export default function Order({ route }) {
             })
     }
 
+    const showArticleModalFn = () => {
+        setShowArticleModal(true)
+        setShowAddArticleError(false)
+    }
+
     const addArticle = () => {
-        // validar que no hayan campos vacios
-        if(article.articleName === '' && article.articleWeightType === '' && articleCount === '') {
-            // muestro mensaje de error
+        if(article.articleName === '' || article.articleWeightType === '' || article.articleCount === '') {
+            setShowAddArticleError(true)
         } else {
-            // lo agrego a la lista..
             onChangeSetState(article, 'listArticle')
+            setShowArticleModal(false)
         }
-        setShowArticleModal(false)
     }
 
     const sendOrder = () => {
@@ -132,7 +136,7 @@ export default function Order({ route }) {
                     }}
                     chevron
                     containerStyle = { styles.menuItem }
-                    onPress = { () => setShowArticleModal(true) }
+                    onPress = { () => showArticleModalFn() }
                 />
                 <ListItem
                     title = { 'Ver artículos agregados' }
@@ -142,7 +146,9 @@ export default function Order({ route }) {
                     }}
                     chevron
                     containerStyle = { styles.menuItem }
-                    onPress={() => nagivation.navigate('articleList')}
+                    onPress={() => nagivation.navigate('articleList', {
+                        listArticle : state.listArticle
+                    })}
                 />
             </View>
 
@@ -179,9 +185,8 @@ export default function Order({ route }) {
                 addArticle = { addArticle }
                 setShowArticleModal = { setShowArticleModal }
                 article = { article }
+                showAddArticleError = { showAddArticleError }
             />
-
-        
 
         <Loading isVisible = { isLoading } text = 'Enviando pedido' />
             
@@ -196,7 +201,8 @@ const ArticleModal = (props) => {
         onChangeSetArticle,
         addArticle,
         setShowArticleModal,
-        article
+        article,
+        showAddArticleError
     } = props
 
     return (
@@ -243,6 +249,12 @@ const ArticleModal = (props) => {
                     containerStyle = { styles.input }
                     onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
                 />
+                {
+                    showAddArticleError && 
+                    <Text style = { styles.textAddArticleError }>
+                        Los campos no pueden ser vacios
+                    </Text>
+                }
                 <Button 
                     title = 'Agregar artículo'
                     containerStyle = { styles.btnAddArticle }
@@ -308,5 +320,8 @@ const styles = StyleSheet.create({
     menuItem: {
         borderBottomWidth: 1,
         borderBottomColor: '#e3e3e3'
+    },
+    textAddArticleError: {
+        color: 'red'
     }
 })
