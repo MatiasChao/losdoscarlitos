@@ -11,7 +11,7 @@ export default function ArticleModal (props) {
         article,
         showAddArticleError
     } = props
-
+ 
     return (
         <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
             <View style = { styles.viewForm }>    

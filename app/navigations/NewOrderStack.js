@@ -43,7 +43,7 @@ export default function NewOrderStack() {
             <Stack.Screen
                 name = 'articleList'
                 component = { ArticleList }
-                options = {{ title: "Artículos agregados" }}
+                options = {{ title: "Artículos" }}
             />
        </Stack.Navigator>
     )

@@ -20,9 +20,6 @@ export default function Order({ route }) {
     const toastRef = useRef()
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [listArticles, setListArticles] = useState([])
-    const [showArticleModal, setShowArticleModal] = useState(false)
-    const [showAddArticleError, setShowAddArticleError] = useState(false)
     const [errorName, showErrorName] = useState(false)
     
     const [state, setState] = useState({
@@ -31,12 +28,6 @@ export default function Order({ route }) {
         observation: '',
         createDate: new Date(),
         createBy: ''
-    })
-
-    const [article, setArticle] = useState({
-        articleName: '',
-        articleWeightType: '',
-        articleCount: ''
     })
 
     useEffect(() => {
@@ -53,6 +44,7 @@ export default function Order({ route }) {
 
     const onChangeSetState = (e, type) => {
 
+        // borrar esta parte
         if(type === 'listArticle') {
             state.listArticle.push(e)
             return setState({
@@ -62,13 +54,6 @@ export default function Order({ route }) {
 
         return setState({
             ...state, 
-            [type]: e
-        })
-    }
-
-    const onChangeSetArticle = (e, type) => {
-        return setArticle({
-            ...article, 
             [type]: e
         })
     }
@@ -98,20 +83,6 @@ export default function Order({ route }) {
             })
     }
 
-    const showArticleModalFn = () => {
-        setShowArticleModal(true)
-        setShowAddArticleError(false)
-    }
-
-    const addArticle = () => {
-        if(article.articleName === '' || article.articleWeightType === '' || article.articleCount === '') {
-            setShowAddArticleError(true)
-        } else {
-            onChangeSetState(article, 'listArticle')
-            setShowArticleModal(false)
-        }
-    }
-
     const sendOrder = () => {
         console.log("ENVIAR PEDIDO........")
         console.log("STATE: " , state)
@@ -135,18 +106,7 @@ export default function Order({ route }) {
 
             <View>
                 <ListItem
-                    title = { 'Agregar artículo' }
-                    leftIcon = {{ 
-                        name: "plus",
-                        type: 'material-community'
-                    }}
-                    chevron
-                    containerStyle = { styles.menuItem }
-                    onPress = { () => showArticleModalFn() }
-                />
-
-                <ListItem
-                    title = { 'Ver artículos agregados' }
+                    title = { 'Ver/agregar artículos' }
                     leftIcon = {{ 
                         name: "cart",
                         type: 'material-community'
@@ -154,11 +114,23 @@ export default function Order({ route }) {
                     chevron
                     containerStyle = { styles.menuItem }
                     onPress={() => nagivation.navigate('articleList', {
-                        listArticle : state.listArticle
+                        setState: setState,
+                        state: state
                     })}
-                    disabled = { state.listArticle == 0 }
                     disabledStyle={{backgroundColor: '#f2f2f2' }}
                 />
+            </View>
+
+            <View style={{alignItems: 'center'}}>
+            {
+                state.listArticle.length > 0?
+                <Text style = { styles.articleTextCount }>
+                    Tienes {state.listArticle.length} artículos agregados
+                </Text> : 
+                <Text style = { styles.articleTextCount }>
+                    Aún no tienes artículos agregados
+                </Text>
+            }
             </View>
 
             <Text>
@@ -180,7 +152,9 @@ export default function Order({ route }) {
 
             {
                 errorName && 
-                <Text>El nombre no puede ser vacio</Text>   
+                <View style = { styles.textErrorNameView }>
+                    <Text style = { styles.textErrorName }>El nombre no puede ser vacio</Text>
+                </View>   
             }
 
             {
@@ -193,90 +167,9 @@ export default function Order({ route }) {
                 />
             }
 
-            <ArticleModal 
-                showArticleModal = { showArticleModal } 
-                onChangeSetArticle={(e, type) => onChangeSetArticle(e, type)}
-                addArticle = { addArticle }
-                setShowArticleModal = { setShowArticleModal }
-                article = { article }
-                showAddArticleError = { showAddArticleError }
-            />
-
         <Loading isVisible = { isLoading } text = 'Enviando pedido' />
             
         </ScrollView>
-    )
-}
-
-const ArticleModal = (props) => {
-        
-    const {
-        showArticleModal,
-        onChangeSetArticle,
-        addArticle,
-        setShowArticleModal,
-        article,
-        showAddArticleError
-    } = props
-
-    return (
-        <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
-            <View style = { styles.viewForm }>    
-                <Input 
-                    placeholder = 'Artículo'
-                    containerStyle = { styles.input }
-                    onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleName') }
-                />
-                <View style = { styles.container }>
-                    <CheckBox
-                        center
-                        title='Kilogramo'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'kilogramo'}
-                        onPress = { e => onChangeSetArticle('kilogramo', 'articleWeightType') }
-                    />
-                    <CheckBox
-                        center
-                        title='Tira'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'tira'}
-                        onPress = { e => onChangeSetArticle('tira', 'articleWeightType') }
-                    />
-                </View>
-                <View style = { styles.container }>
-                    <CheckBox
-                        center
-                        title='Unidad'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'unidad'}
-                        onPress = { e => onChangeSetArticle('unidad', 'articleWeightType') }
-                    />
-                </View>
-                <Input 
-                    placeholder = 'Cantidad'
-                    containerStyle = { styles.input }
-                    onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
-                />
-                {
-                    showAddArticleError && 
-                    <Text style = { styles.textAddArticleError }>
-                        Los campos no pueden ser vacios
-                    </Text>
-                }
-                <Button 
-                    title = 'Agregar artículo'
-                    containerStyle = { styles.btnAddArticle }
-                    buttonStyle = { styles.btnSendOrder }
-                    onPress = { () => addArticle() }
-                />
-            </View>
-        </Overlay>
     )
 }
 
@@ -336,6 +229,15 @@ const styles = StyleSheet.create({
         borderBottomColor: '#e3e3e3'
     },
     textAddArticleError: {
+        color: 'red'
+    },
+    articleTextCount: {
+        marginTop: 30
+    },
+    textErrorNameView: {
+        alignItems: 'center'
+    },
+    textErrorName: {
         color: 'red'
     }
 })
