@@ -20,7 +20,10 @@ export default function Order({ route }) {
     const toastRef = useRef()
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    // mejorar esto con un objeto
     const [errorName, showErrorName] = useState(false)
+    const [errorListArticleEmpty, setErrorListArticleEmpty] = useState(false)
     
     const [state, setState] = useState({
         name: '',
@@ -62,13 +65,11 @@ export default function Order({ route }) {
     const uploadOrderFirebase = () => {
         setIsLoading(true)
 
-
-        // CHEQUEAR QUE LOS CAMPOS NO SEAN VACIOS !!!
         db.collection('orders')
             .add({
-                name: '',
-                listArticle: [],
-                observation: '',
+                name: state.name,
+                listArticle: state.listArticle,
+                observation: state.observation,
                 createDate: new Date(),
                 createBy: firebase.auth().currentUser.uid
             })
@@ -89,9 +90,16 @@ export default function Order({ route }) {
 
         if(state.name === '') {
             showErrorName(true)
+        }   
+        else if(state.listArticle.length === 0){
+            setErrorListArticleEmpty(true)
+            showErrorName(false)
+        } 
+        else {
+            uploadOrderFirebase()
+            showErrorName(false)
+            setErrorListArticleEmpty(false)
         }
-
-        //uploadOrderFirebase()
     }
 
     return(
@@ -150,12 +158,17 @@ export default function Order({ route }) {
                 />
             </View>
 
-            {
-                errorName && 
-                <View style = { styles.textErrorNameView }>
+
+            <View style = { styles.textErrorNameView }>
+                {
+                    errorName && 
                     <Text style = { styles.textErrorName }>El nombre no puede ser vacio</Text>
-                </View>   
-            }
+                }
+                {
+                    errorListArticleEmpty && 
+                    <Text style = { styles.textErrorName }>Tienes que agregar al menos 1 artículo</Text>
+                }
+            </View>   
 
             {
                 user && 

@@ -4,6 +4,7 @@ import { useSafeArea } from 'react-native-safe-area-context'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { firebaseApp } from '../utils/firebase'
+import OrderListByUser from './OrderListByUser'
 
 const db = firebase.firestore(firebaseApp)
 
@@ -16,7 +17,7 @@ export default function OrderList() {
     
     useEffect(() => {
         db.collection('orders').get().then((snap) => {
-            countOrders(snap.size)
+            setCountOrders(snap.size)
         })
 
         const resultOrders = []
@@ -39,10 +40,13 @@ export default function OrderList() {
 
     }, [])
 
+    console.log("CANTIDAD: ", countOrders)
+
     return(
         <View>
-            <Text>OrderList</Text>
-            <Text>Ver la cantidad de Pedidos por Clientes, por fechas</Text>
+            <OrderListByUser 
+                orders = { orders }
+            />
         </View>
     )
 }

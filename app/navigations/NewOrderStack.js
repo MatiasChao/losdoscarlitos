@@ -45,6 +45,11 @@ export default function NewOrderStack() {
                 component = { ArticleList }
                 options = {{ title: "Artículos" }}
             />
+            <Stack.Screen
+                name = 'orderList'
+                component = { OrderList }
+                options = {{ title: "Lista de Pedidos" }}
+            />
        </Stack.Navigator>
     )
 }
