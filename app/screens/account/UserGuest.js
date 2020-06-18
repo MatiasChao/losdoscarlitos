@@ -11,7 +11,7 @@ export default function UserGuest() {
     return(
         <ScrollView centerContent={true} style={styles.viewBody}>
             <Image 
-                source={require("../../../assets/img/user-guest.jpg")}
+                source={require("../../../assets/img/logo.png")}
                 resizeMode="contain"
                 style={styles.image}
             />
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         marginRight: 30
     },
     image: {
-        height: 300,
+        height: 150,
         width: '100%',
         marginBottom: 40
     },

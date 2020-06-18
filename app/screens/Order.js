@@ -25,15 +25,28 @@ export default function Order({ route }) {
     const [errorName, showErrorName] = useState(false)
     const [errorListArticleEmpty, setErrorListArticleEmpty] = useState(false)
     
-    const [state, setState] = useState({
+    const defaultOrder = {
         name: '',
         listArticle: [],
         observation: '',
         createDate: new Date(),
         createBy: ''
-    })
+    }
+
+    const [state, setState] = useState(defaultOrder)
 
     useEffect(() => {
+
+        console.log("CLIKEO NUEVO PEDIDO????")
+        console.log("route...." , route)
+
+        if(route.params && route.params.editOrder) {
+            console.log("VIENE PA EDITAR LA ORDEN")
+            //checkEsto()
+        } else {
+            console.log("NO VIENE PA EDITAR LA ORDEN")
+            setState(defaultOrder)
+        }
 
         // nos traemos la info del usuario logueado
         // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
@@ -43,7 +56,16 @@ export default function Order({ route }) {
             .onAuthStateChanged((userInfo) => {
                 setUser(userInfo)
             })
-    }, [])
+    }, [route])
+
+    const checkEsto = () => {
+        const order = route.params.order
+        console.log("route.params.order: ", route.params.order)
+
+        console.log("ORDEN -> ", order)
+
+        setState(order)
+    }
 
     const onChangeSetState = (e, type) => {
 
@@ -76,7 +98,7 @@ export default function Order({ route }) {
             .then(() => {
                 setIsLoading(false)
                 console.log("OK")
-                nagivation.navigate('orderList') // cuando envia el pedido lo mandamos a la lista de pedidos enviados
+                nagivation.navigate('orderList')// cuando envia el pedido lo mandamos a la lista de pedidos enviados
             })
             .catch(() => {
                 setIsLoading(false)
@@ -109,12 +131,13 @@ export default function Order({ route }) {
                     placeholder = 'Nombre'
                     containerStyle = { styles.inputName }
                     onChange = { e => onChangeSetState(e.nativeEvent.text, 'name') }
+                    defaultValue = { state.name }
                 />
             </View> 
 
             <View>
                 <ListItem
-                    title = { 'Ver/agregar artículos' }
+                    title = { 'Ver / agregar artículos' }
                     leftIcon = {{ 
                         name: "cart",
                         type: 'material-community'

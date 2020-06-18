@@ -62,8 +62,6 @@ export default function ArticleList({ route }) {
 
     const addArticle = () => {
 
-    console.log("addArticle - article ", article)
-
         if(article.articleName === '' || article.articleWeightType === '' || article.articleCount === '') {
             setShowAddArticleError(true)
         } else {

@@ -15,6 +15,18 @@ export default function OrderList() {
     const [startOrders, setStartOrders] = useState(null)
     const limitOrders = 10
     
+    // implementar
+    const deleteOrder = async () => {
+        // poder eliminar pedidos con fecha de hoy?
+        try {
+            await db.collection('orders').doc(id).delete()
+            // mostrar mensaje que se borro satisfactoriamente
+        } catch (error) {
+            console.log("Hubo un error al eliminar")
+        }
+
+    }
+
     useEffect(() => {
         db.collection('orders').get().then((snap) => {
             setCountOrders(snap.size)
@@ -28,19 +40,14 @@ export default function OrderList() {
             .then(response => {
                 setStartOrders(response.docs[response.docs.length -1])
                 response.forEach((doc) => {
-                    //console.log(doc.data())
-                    //console.log(doc.id) // obtenemos el ID
                     const order = doc.data()
                     order.id = doc.id
-                    console.log(order)
                     resultOrders.push(order)
                 })
                 setOrders(resultOrders)
             })
 
     }, [])
-
-    console.log("CANTIDAD: ", countOrders)
 
     return(
         <View>

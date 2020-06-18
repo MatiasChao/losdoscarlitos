@@ -6,12 +6,13 @@ import { StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import OrderList from '../screens/OrderList'
 import ArticleList from '../screens/ArticleList'
+import EditArticle from '../screens/EditArticle'
 
 const Stack = createStackNavigator()
 
 export default function NewOrderStack() {
 
-    const nagivation = useNavigation()
+    const navigation = useNavigation()
 
     return(
        <Stack.Navigator>
@@ -45,11 +46,27 @@ export default function NewOrderStack() {
                 component = { ArticleList }
                 options = {{ title: "Artículos" }}
             />
+
             <Stack.Screen
-                name = 'orderList'
-                component = { OrderList }
-                options = {{ title: "Lista de Pedidos" }}
+                name = 'editArticle'
+                component = { EditArticle }
+                options = {{ title: "Editar pedido" }}
             />
+            
+                {
+                    // TODO: SE PUEDE BORRAR? LO TENGO EN EL OTRO : OrderListStack
+                    /**
+                     * <Stack.Screen
+                            name = 'orderList'
+                            component = { OrderList }
+                            options = {{
+                                title: "Lista de Pedidos"
+                            }}
+                        />
+                     * 
+                     */
+                }
+            
        </Stack.Navigator>
     )
 }

@@ -30,7 +30,7 @@ export default function Navigation() {
                 <Tab.Screen 
                     name = "newOrderStack" 
                     component = { NewOrderStack } 
-                    options = {{ title: 'Nuevo Pedido' }} 
+                    options = {{ title: 'Nuevo Pedido' }}
                 />
                 <Tab.Screen x
                     name = "orderListStack" 

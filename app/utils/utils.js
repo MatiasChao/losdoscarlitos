@@ -1,3 +1,4 @@
+/*
 const days = [
     {'name':'Lun', 'value':0}, 
     {'name':'Mar', 'value':1},
@@ -17,3 +18,7 @@ export const getDayFn = (day) => {
         }
     })
 }
+*/
+
+export const days = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
+export const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']

@@ -1,7 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { Button } from 'react-native-elements'
 import { size } from 'lodash'
-import { getDayFn } from '../utils/utils'
+import { useNavigation } from '@react-navigation/native'
+import { days, months } from '../utils/utils'
 
 export default function OrderListByUser(props) {
 
@@ -9,13 +11,15 @@ export default function OrderListByUser(props) {
         orders
     } = props
 
+    const navigation = useNavigation()
+
     return (
         <View>
             {
                 size(orders) > 0 ? 
                     <FlatList 
                         data = { orders }
-                        renderItem = { (order) => <Order order = { order} />}
+                        renderItem = { (order) => <Order order = { order} navigation = { navigation } />}
                         keyExtractor = {(item, index) => index.toString()}
                     />
                     :
@@ -29,13 +33,13 @@ export default function OrderListByUser(props) {
 }
 
 function Order(props) {
-    const { order } = props
+    const { order, navigation } = props
     const { name, createDate } = order.item
-    const days = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
 
     const goOrder = () => {
-        console.log("OK")
-        // abrir pa editar
+        navigation.navigate('editArticle', {
+            order : order.item
+        })
     } 
 
     const date = new Date(createDate.seconds*1000)
@@ -44,7 +48,7 @@ function Order(props) {
         <TouchableOpacity onPress = { goOrder }>
             <View style = { styles.viewOrder }>
                 <Text>
-                    { name }  { days[date.getDay()] } - { date.getHours() } : { date.getMinutes() }    
+                    <Text style={{fontWeight: 'bold'}}> { name } </Text> - { days[date.getDay()] } { date.getUTCDate() } { 'de' } { months[date.getMonth()] } { date.getHours() } : { date.getMinutes() }    
                 </Text>
             </View>
         </TouchableOpacity>
