@@ -4,6 +4,7 @@ import { ListItem, Text, Overlay, Input, CheckBox, Button} from 'react-native-el
 import { size, isEmpty, map }  from 'lodash'
 import { useNavigation } from '@react-navigation/native'
 import ModalTest from '../modals/ModalTest'
+import { products } from '../utils/constants'
 
 export default function ArticleList({ route }) {
 

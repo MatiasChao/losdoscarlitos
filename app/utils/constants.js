@@ -1,4 +1,4 @@
-export const productos = [
+export const products = [
     'Chorizo extra especial parrillero',
     'Chorizo extra expecial rueda',
     'Chorizo colorado rueda',
