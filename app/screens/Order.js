@@ -168,7 +168,7 @@ export default function Order({ route }) {
                     <Text style = { styles.textErrorName }>El nombre no puede ser vacio</Text>
                 }
                 {
-                    errorListArticleEmpty && 
+                    errorListArticleEmpty &&
                     <Text style = { styles.textErrorName }>Tienes que agregar al menos 1 artículo</Text>
                 }
             </View>   

@@ -29,7 +29,12 @@ export default function Login() {
                 }
                 
             </View>
-            <Divider style = { styles.divider } />
+            {
+                /**
+                 * <Divider style = { styles.divider } />
+                 */
+            }
+            
             <Toast 
                 ref = { toastRef }
                 position = 'center'

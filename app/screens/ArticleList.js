@@ -138,8 +138,6 @@ const ArticleModal = (props) => {
         showAddArticleError
     } = props
 
-    console.log("ARTICLE NAME: ", article.articleName)
-
     return (
         <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
             <View style = { styles.viewForm }>    
@@ -241,7 +239,9 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     textAddArticleError: {
-        color: 'red'
+        color: 'red',
+        paddingLeft: 20,
+        paddingBottom: 5
     },
     articlesAddedListTitle: {
         fontWeight: 'bold',

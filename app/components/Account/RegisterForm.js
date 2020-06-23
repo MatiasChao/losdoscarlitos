@@ -48,7 +48,7 @@ export default function RegisterForm(props) {
 
     const onChange = (e, type) => {
         //console.log(type)
-        console.log(e.nativeEvent.text)
+        //console.log(e.nativeEvent.text)
 
         setFormData({ ...formData, [type]: e.nativeEvent.text })
     }
