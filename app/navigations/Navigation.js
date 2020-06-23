@@ -7,6 +7,9 @@ import OrderListStack from './OrderListStack'
 import NewOrderStack from './NewOrderStack'
 import AccountStack from './AccountStack'
 
+import { firebaseApp } from '../utils/firebase'
+import firebase from 'firebase/app'
+
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
@@ -24,7 +27,7 @@ export default function Navigation() {
             >
                 <Tab.Screen 
                     name = "accountStack" 
-                    component = { AccountStack } 
+                    component = { AccountStack }  
                     options = {{ title: 'Mi Cuenta' }} 
                 />
                 <Tab.Screen 

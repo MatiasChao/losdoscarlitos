@@ -7,11 +7,13 @@ import { firebaseApp } from '../utils/firebase'
 
 const db = firebase.firestore(firebaseApp)
 
-export default function EditArticle({ route }) {
+export default function EditOrder({ route }) {
 
     const [article, setArticle] = useState(null)
-    const [showArticleModal, setShowArticleModal] = useState(true)
+    const [order, setOrder] = useState(null)
+    const [showArticleModal, setShowArticleModal] = useState(false)
     const [showEditArticleError, setShowEditArticleError] = useState(false)
+    const [articlePosition, setArticlePosition] = useState(null)
 
     const { 
         id,
@@ -72,14 +74,32 @@ export default function EditArticle({ route }) {
     }
 
     const showEditModalFn = (article, idx) => {
-        console.log("listArticle: ", listArticle)
-        console.log("article: ", article)
+        setOrder(orderToEdit)
         setArticle(article)
         setShowArticleModal(true)
+        setArticlePosition(idx)
     }
 
     const saveEditedArticle = () => {
+        console.log("ORDEN ACTUALIZADA: ", order)
+    }
 
+    const onChangeOrder = (e, type) => {
+        return setOrder({
+            ...order, 
+            [type]: e
+        })
+    }
+
+    const onChangeArticleInOrderByPositionFn = (e, type) => {
+        //console.log("articlePosition: ", articlePosition)
+        //console.log("Que muestra? -> ", article)
+        //console.log("listArticle: ", listArticle[articlePosition])
+        //console.log("BARCELONA: " , listArticle[articlePosition][type])
+        listArticle[articlePosition][type] = e
+        return setOrder({
+            ...order
+        })
     }
 
     return (
@@ -87,7 +107,7 @@ export default function EditArticle({ route }) {
             <Input 
                     placeholder = 'Nombre'
                     containerStyle = { styles.inputName }
-                    //onChange = { e => onChangeSetState(e.nativeEvent.text, 'name') }
+                    onChangeOrder = { e => onChangeOrder(e.nativeEvent.text, 'name') }
                     defaultValue = { name }
             />
 
@@ -117,7 +137,7 @@ export default function EditArticle({ route }) {
             <Input 
                     placeholder = 'Observacion'
                     containerStyle = { styles.inputName }
-                    //onChange = { e => onChangeSetState(e.nativeEvent.text, 'name') }
+                    onChangeOrder = { e => onChangeOrder(e.nativeEvent.text, 'observation') }
                     defaultValue = { observation }
             />
             <Button 
@@ -127,15 +147,18 @@ export default function EditArticle({ route }) {
                 onPress = { editOrderFirebase }
             />
 
-            <ArticleModal 
-                showArticleModal = { showArticleModal } 
-                setShowArticleModal = { setShowArticleModal }
-                article = { article }
-                saveEditedArticle = { saveEditedArticle }
-                showEditArticleError = { showEditArticleError }
-
-                onChangeSetArticle = {(e, type, idx) => onChangeSetArticle(e, type, idx)}
-            />
+            {
+                showArticleModal && 
+                <ArticleModal 
+                    showArticleModal = { showArticleModal } 
+                    setShowArticleModal = { setShowArticleModal }
+                    article = { article }
+                    saveEditedArticle = { saveEditedArticle }
+                    showEditArticleError = { showEditArticleError }
+                    onChangeOrder = {(e, type) => onChangeOrder(e, type)}
+                    onChangeArticleInOrderByPositionFn = {(e, type) => onChangeArticleInOrderByPositionFn(e, type)}
+                />
+            }
 
         </View>
     )
@@ -148,13 +171,13 @@ const ArticleModal = (props) => {
         setShowArticleModal,
         article,
         saveEditedArticle,
-        showEditArticleError
-        //onChangeSetArticle,
-        //addArticle,
-        //showAddArticleError
+        showEditArticleError,
+        onChangeOrder,
+        onChangeArticleInOrderByPositionFn
     } = props
 
-    console.log("ARTICLE: ", article)
+    //console.log("BRAZIL -> ", props)
+    //console.log("URUGUAY -> ", article)
 
     return (
         <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)} overlayStyle = { styles.overlayContainer }>
@@ -162,7 +185,7 @@ const ArticleModal = (props) => {
                 <Input 
                     placeholder = 'Artículo'
                     containerStyle = { styles.input }
-                    //onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleName') }
+                    onChange = { e => onChangeArticleInOrderByPositionFn(e.nativeEvent.text, 'articleName') }
                     defaultValue = { article.articleName }
                 />
                 <View style = { styles.container }>
@@ -172,8 +195,8 @@ const ArticleModal = (props) => {
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'kilogramo'}
-                        //onPress = { e => onChangeSetArticle('kilogramo', 'articleWeightType') }
+                        checked={article.articleWeightType === 'kilogramos'}
+                        onPress = { () => onChangeArticleInOrderByPositionFn('kilogramos', 'articleWeightType') }
                     />
                     <CheckBox
                         center
@@ -181,8 +204,8 @@ const ArticleModal = (props) => {
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'tira'}
-                        //onPress = { e => onChangeSetArticle('tira', 'articleWeightType') }
+                        checked={article.articleWeightType === 'tiras'}
+                        onPress = { () => onChangeArticleInOrderByPositionFn('tiras', 'articleWeightType') }
                     />
                 </View>
                 <View style = { styles.container }>
@@ -192,15 +215,15 @@ const ArticleModal = (props) => {
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'unidad'}
-                        //onPress = { e => onChangeSetArticle('unidad', 'articleWeightType') }
+                        checked={article.articleWeightType === 'unidades'}
+                        onPress = { () => onChangeArticleInOrderByPositionFn('unidades', 'articleWeightType') }
                     />
                 </View>
                 <Input 
                     placeholder = 'Cantidad'
                     containerStyle = { styles.input }
                     defaultValue = { article.articleCount }
-                    //onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
+                    onChange = { e => onChangeArticleInOrderByPositionFn(e.nativeEvent.text, 'articleCount') }
                 />
                 {
                     showEditArticleError && 
@@ -209,7 +232,8 @@ const ArticleModal = (props) => {
                     </Text>
                 }
                 <Button 
-                    title = 'Guardar artículo'
+                    title = 'Actualizar artículo'
+                    buttonStyle= { styles.btnStyle}
                     containerStyle = { styles.btnAddArticle }
                     onPress = { () => saveEditedArticle() }
                 />
@@ -259,6 +283,9 @@ const styles = StyleSheet.create({
         width: '90%',
         marginLeft: '5%',
         marginBottom: 15
+    },
+    btnStyle: {
+        backgroundColor: '#00a680'
     },
     overlayContainer: {
         width: '90%'

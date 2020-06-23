@@ -20,12 +20,16 @@ export default function Login() {
                 <LoginForm 
                     toastRef = { toastRef }
                 />
-                <CreateAccount />
+                
+                {
+                    /**
+                     * ESTO no lo van a usar en Los2Carlitos
+                     * <CreateAccount />
+                     */
+                }
+                
             </View>
             <Divider style = { styles.divider } />
-            <Text>
-                Social Login
-            </Text>
             <Toast 
                 ref = { toastRef }
                 position = 'center'

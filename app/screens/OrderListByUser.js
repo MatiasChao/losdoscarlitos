@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
-import { Button } from 'react-native-elements'
 import { size } from 'lodash'
 import { useNavigation } from '@react-navigation/native'
 import { days, months } from '../utils/utils'
@@ -37,7 +36,7 @@ function Order(props) {
     const { name, createDate } = order.item
 
     const goOrder = () => {
-        navigation.navigate('editArticle', {
+        navigation.navigate('editOrder', {
             order : order.item
         })
     } 
@@ -48,7 +47,7 @@ function Order(props) {
         <TouchableOpacity onPress = { goOrder }>
             <View style = { styles.viewOrder }>
                 <Text>
-                    <Text style={{fontWeight: 'bold'}}> { name } </Text> - { days[date.getDay()] } { date.getUTCDate() } { 'de' } { months[date.getMonth()] } { date.getHours() } : { date.getMinutes() }    
+                    <Text style={{fontWeight: 'bold'}}> { name } </Text> - { days[date.getDay()] } { date.getUTCDate() } { 'de' } { months[date.getMonth()] } { date.getHours() }:{ date.getMinutes() }{ date.getMinutes() && date.getMinutes() < 10 && '0' } 
                 </Text>
             </View>
         </TouchableOpacity>

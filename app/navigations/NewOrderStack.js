@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import OrderList from '../screens/OrderList'
 import ArticleList from '../screens/ArticleList'
-import EditArticle from '../screens/EditArticle'
+import EditOrder from '../screens/EditOrder'
 
 const Stack = createStackNavigator()
 
@@ -48,9 +48,26 @@ export default function NewOrderStack() {
             />
 
             <Stack.Screen
-                name = 'editArticle'
-                component = { EditArticle }
-                options = {{ title: "Editar pedido" }}
+                name = 'editOrder'
+                component = { EditOrder }
+                options = {{
+                    title: "Editar pedido",
+                    headerLeft: () => (
+                        <Button
+                          onPress={() => navigation.navigate('orderList')}
+                          buttonStyle = { styles.btn }
+                          style = { styles.btnIcon } 
+                          icon={
+                            <Icon
+                              name="arrow-left"
+                              type="material-community"
+                              size={27}
+                              color="#00a680"
+                            />
+                          }
+                        />
+                    )
+                }}
             />
             
                 {
@@ -76,6 +93,9 @@ const styles = StyleSheet.create({
         margin: 5
     },
     btn: {
-        backgroundColor: '#00a680'
+        backgroundColor: '#fff'
+    },
+    btnIcon: {
+        marginLeft: 10
     }
 })

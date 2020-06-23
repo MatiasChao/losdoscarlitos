@@ -17,22 +17,7 @@ export default function OrderListStack() {
                 name = "orderList"
                 component = { OrderList }
                 options = {{
-                    title: "Lista de Pedidos",
-                    headerLeft: () => (
-                        <Button
-                          onPress={() => navigation.navigate('order')}
-                          buttonStyle = { styles.btn }
-                          style = { styles.btnIcon } 
-                          icon={
-                            <Icon
-                              name="arrow-left"
-                              type="material-community"
-                              size={20}
-                              color="white"
-                            />
-                          }
-                        />
-                    )
+                    title: "Lista de Pedidos"
                 }}
             />
          </Stack.Navigator>
@@ -44,6 +29,6 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     btn: {
-        backgroundColor: '#00a680'
+        backgroundColor: '#fff'
     }
 })

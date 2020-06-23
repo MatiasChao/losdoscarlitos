@@ -101,7 +101,7 @@ export default function ArticleList({ route }) {
                     state.listArticle.map((a, idx) => (
                         <ListItem
                             key={idx}
-                            title = { a.articleName }
+                            title = { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
                             leftIcon = {{ 
                                 name: "pencil",
                                 type: 'material-community'
@@ -152,32 +152,32 @@ const ArticleModal = (props) => {
                 <View style = { styles.container }>
                     <CheckBox
                         center
-                        title='Kilogramo'
+                        title='Kilogramos'
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'kilogramo'}
-                        onPress = { e => onChangeSetArticle('kilogramo', 'articleWeightType') }
+                        checked={article.articleWeightType === 'kilogramos'}
+                        onPress = { () => onChangeSetArticle('kilogramos', 'articleWeightType') }
                     />
                     <CheckBox
                         center
-                        title='Tira'
+                        title='Tiras'
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'tira'}
-                        onPress = { e => onChangeSetArticle('tira', 'articleWeightType') }
+                        checked={article.articleWeightType === 'tiras'}
+                        onPress = { () => onChangeSetArticle('tiras', 'articleWeightType') }
                     />
                 </View>
                 <View style = { styles.container }>
                     <CheckBox
                         center
-                        title='Unidad'
+                        title='Unidades'
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'unidad'}
-                        onPress = { e => onChangeSetArticle('unidad', 'articleWeightType') }
+                        checked={article.articleWeightType === 'unidades'}
+                        onPress = { () => onChangeSetArticle('unidades', 'articleWeightType') }
                     />
                 </View>
                 <Input 
@@ -233,6 +233,9 @@ const styles = StyleSheet.create({
         width: '90%',
         marginLeft: '5%',
         marginBottom: 15
+    },
+    btnSendOrder: {
+        backgroundColor: '#00a680'
     },
     input: {
         marginBottom: 10

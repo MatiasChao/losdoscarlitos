@@ -9,7 +9,6 @@ import Loading from '../components/Loading'
 import qs from 'qs';
 import { productos } from '../utils/constants'
 import 'firebase/firestore'
-import { State } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import ModalTest from '../modals/ModalTest'
 const db = firebase.firestore(firebaseApp)
@@ -36,17 +35,7 @@ export default function Order({ route }) {
     const [state, setState] = useState(defaultOrder)
 
     useEffect(() => {
-
-        console.log("CLIKEO NUEVO PEDIDO????")
-        console.log("route...." , route)
-
-        if(route.params && route.params.editOrder) {
-            console.log("VIENE PA EDITAR LA ORDEN")
-            //checkEsto()
-        } else {
-            console.log("NO VIENE PA EDITAR LA ORDEN")
-            setState(defaultOrder)
-        }
+        setState(defaultOrder)
 
         // nos traemos la info del usuario logueado
         // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
@@ -57,15 +46,6 @@ export default function Order({ route }) {
                 setUser(userInfo)
             })
     }, [route])
-
-    const checkEsto = () => {
-        const order = route.params.order
-        console.log("route.params.order: ", route.params.order)
-
-        console.log("ORDEN -> ", order)
-
-        setState(order)
-    }
 
     const onChangeSetState = (e, type) => {
 
@@ -98,7 +78,7 @@ export default function Order({ route }) {
             .then(() => {
                 setIsLoading(false)
                 console.log("OK")
-                nagivation.navigate('orderList')// cuando envia el pedido lo mandamos a la lista de pedidos enviados
+                nagivation.navigate('orderList') // cuando envia el pedido lo mandamos a la lista de pedidos enviados
             })
             .catch(() => {
                 setIsLoading(false)
@@ -194,13 +174,16 @@ export default function Order({ route }) {
             </View>   
 
             {
-                user && 
+                user?
                 <Button 
                     title = 'Enviar pedido'
                     containerStyle = { styles.btnContainer }
                     buttonStyle = { styles.btnSendOrder }
                     onPress = { sendOrder }
-                />
+                /> :
+                <View style={styles.textLoginView}>
+                    <Text style={styles.loginText}> Necesitas iniciar sesión para envíar pedidos </Text>
+                </View>
             }
 
         <Loading isVisible = { isLoading } text = 'Enviando pedido' />
@@ -275,5 +258,12 @@ const styles = StyleSheet.create({
     },
     textErrorName: {
         color: 'red'
+    },
+    textLoginView: {
+        alignItems: 'center'
+    },
+    loginText: {
+        color: '#00a680',
+        fontWeight: 'bold'
     }
 })

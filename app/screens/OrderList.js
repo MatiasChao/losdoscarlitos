@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
-import { useSafeArea } from 'react-native-safe-area-context'
+import { View, Text, StyleSheet } from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { firebaseApp } from '../utils/firebase'
@@ -13,6 +12,7 @@ export default function OrderList() {
     const [orders, setOrders] = useState([])
     const [countOrders, setCountOrders] = useState(0)
     const [startOrders, setStartOrders] = useState(null)
+    const [user, setUser] = useState(null)
     const limitOrders = 10
     
     // implementar
@@ -28,11 +28,13 @@ export default function OrderList() {
     }
 
     useEffect(() => {
+        // sacar esto para función
         db.collection('orders').get().then((snap) => {
             setCountOrders(snap.size)
         })
 
         const resultOrders = []
+
         db.collection('orders')
             .orderBy('createDate', 'desc')
             .limit(limitOrders)
@@ -47,13 +49,41 @@ export default function OrderList() {
                 setOrders(resultOrders)
             })
 
+            // sacar esto para función
+            firebase
+            .auth()
+            .onAuthStateChanged((userInfo) => {
+                setUser(userInfo)
+            })
     }, [])
 
     return(
         <View>
-            <OrderListByUser 
-                orders = { orders }
-            />
+            {
+                user?
+                <OrderListByUser 
+                    orders = { orders }
+                /> :
+                <View style={styles.textLoginView}>
+                    <Text style={styles.loginText}>
+                        Necesitas iniciar sesión para ver los pedidos enviados
+                    </Text>
+                </View>
+            }
+            
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    textLoginView: {
+        marginTop: '50%',
+        alignItems: 'center'
+    },
+    loginText: {
+        color: '#00a680',
+        fontWeight: 'bold',
+        width: 250,
+        textAlign: 'center'
+    }
+})
