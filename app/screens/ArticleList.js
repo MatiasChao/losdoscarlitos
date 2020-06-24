@@ -18,6 +18,7 @@ export default function ArticleList({ route }) {
     const [showArticleModal, setShowArticleModal] = useState(false) // es el que muestra el modal del articulo
     const [showAddArticleError, setShowAddArticleError] = useState(false) // muestra mensaje de error si tiene campo vacio
     const [positionArticle, setPositionArticle] = useState(null)
+    const [editing, setEditing] = useState(false)
 
     const defaultArticle = {
         articleName: '',
@@ -35,8 +36,8 @@ export default function ArticleList({ route }) {
     const showEditModalFn = (article, idx) => {
         setArticle(article)
         setShowArticleModal(true)
-        console.log("positionArticle: ", idx)
         setPositionArticle(idx)
+        setEditing(true)
     }
 
     // click en add article ( abre modal )
@@ -63,7 +64,6 @@ export default function ArticleList({ route }) {
     }
 
     const addArticle = () => {
-
         if(article.articleName === '' || article.articleWeightType === '' || article.articleCount === '') {
             setShowAddArticleError(true)
         } else {
@@ -75,7 +75,17 @@ export default function ArticleList({ route }) {
             setShowArticleModal(false)
             setArticle(defaultArticle)
             setPositionArticle(null)
+            setEditing(false)
         }
+    }
+
+    const deleteArticle = () => {
+        state.listArticle.splice(positionArticle, 1)
+        setShowArticleModal(false)    
+
+        return setState({
+            ...state, 
+        }) 
     }
 
     return(
@@ -124,6 +134,8 @@ export default function ArticleList({ route }) {
                 article = { article }
                 showAddArticleError = { showAddArticleError }
                 products = { products }
+                editing = { editing }
+                deleteArticle = { deleteArticle }
             />
         
         </View>
@@ -139,7 +151,9 @@ const ArticleModal = (props) => {
         setShowArticleModal,
         article,
         showAddArticleError,
-        products
+        products,
+        editing,
+        deleteArticle
     } = props
 
     return (
@@ -207,11 +221,21 @@ const ArticleModal = (props) => {
                     </Text>
                 }
                 <Button 
-                    title = 'Agregar artículo'
+                    title = { editing? 'Actualizar artículo' : 'Agregar artículo' }
                     containerStyle = { styles.btnAddArticle }
                     buttonStyle = { styles.btnSendOrder }
                     onPress = { () => addArticle() }
                 />
+
+                {
+                    editing && 
+                    <Button 
+                        title = 'Eliminar artículo'
+                        containerStyle = { styles.btnAddArticle }
+                        buttonStyle = { styles.btnDeleteOrder }
+                        onPress = { () => deleteArticle() }
+                    />
+                }
             </View>
         </Overlay>
     )
@@ -250,6 +274,9 @@ const styles = StyleSheet.create({
     },
     btnSendOrder: {
         backgroundColor: '#00a680'
+    },
+    btnDeleteOrder: {
+        backgroundColor: '#EC5252'
     },
     input: {
         marginBottom: 10
