@@ -5,6 +5,7 @@ import { size, isEmpty, map }  from 'lodash'
 import { useNavigation } from '@react-navigation/native'
 import ModalTest from '../modals/ModalTest'
 import { products } from '../utils/constants'
+import DropDownPicker from 'react-native-dropdown-picker'
 
 export default function ArticleList({ route }) {
 
@@ -122,6 +123,7 @@ export default function ArticleList({ route }) {
                 setShowArticleModal = { setShowArticleModal }
                 article = { article }
                 showAddArticleError = { showAddArticleError }
+                products = { products }
             />
         
         </View>
@@ -136,18 +138,31 @@ const ArticleModal = (props) => {
         addArticle,
         setShowArticleModal,
         article,
-        showAddArticleError
+        showAddArticleError,
+        products
     } = props
 
     return (
         <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
-            <View style = { styles.viewForm }>    
-                <Input 
-                    placeholder = 'Artículo'
-                    containerStyle = { styles.input }
-                    onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleName') }
-                    defaultValue = { article.articleName }
-                />
+            <View style = { styles.viewForm }>  
+
+                <View style = { styles.dropDown }>
+                    <DropDownPicker
+                        items = {
+                            products
+                        }
+                        defaultValue = { article.articleName }
+                        containerStyle = {{height: 40}}
+                        style = {{backgroundColor: '#fafafa'}}
+                        dropDownStyle = {{backgroundColor: '#fafafa'}}
+                        onChangeItem = {item => onChangeSetArticle(item.value, 'articleName') }
+                        searchable = { true }
+                        searchablePlaceholder = "Buscar artículo..."
+                        searchableError = "Artículo no encontrado"
+                        placeholder = "Selecciona un artículo"
+                    />
+                </View>
+
                 <View style = { styles.container }>
                     <CheckBox
                         center
@@ -249,5 +264,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginBottom: 20,
         marginLeft: 60
+    },
+    dropDown: {
+        marginTop: 10,
+        marginBottom: 10,
+        zIndex: 1000
     }
 })
