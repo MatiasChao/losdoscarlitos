@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { firebaseApp } from '../utils/firebase'
@@ -58,7 +58,7 @@ export default function OrderList() {
     }, [])
 
     return(
-        <View>
+        <ScrollView>
             {
                 user?
                 <OrderListByUser 
@@ -71,7 +71,7 @@ export default function OrderList() {
                 </View>
             }
             
-        </View>
+        </ScrollView>
     )
 }
 

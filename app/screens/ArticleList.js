@@ -93,15 +93,15 @@ export default function ArticleList({ route }) {
             <Text h5 style={styles.textTitle}>Puedes ver o modificar los artículos agregados</Text>
 
             <ListItem
-                    title = { 'Agregar artículo' }
-                    leftIcon = {{ 
-                        name: "plus",
-                        type: 'material-community'
-                    }}
-                    chevron
-                    containerStyle = { styles.menuItem }
-                    onPress = { () => showArticleModalFn() }
-                />
+                title = { 'Agregar artículo' }
+                leftIcon = {{ 
+                    name: "plus",
+                    type: 'material-community'
+                }}
+                chevron
+                containerStyle = { styles.menuItem }
+                onPress = { () => showArticleModalFn() }
+            />
 
             <View style={styles.articleList}>
                 {
@@ -128,7 +128,7 @@ export default function ArticleList({ route }) {
 
             <ArticleModal 
                 showArticleModal = { showArticleModal } 
-                onChangeSetArticle = {(e, type, idx) => onChangeSetArticle(e, type, idx)}
+                onChangeSetArticle = {(e, type) => onChangeSetArticle(e, type)}
                 addArticle = { addArticle }
                 setShowArticleModal = { setShowArticleModal }
                 article = { article }

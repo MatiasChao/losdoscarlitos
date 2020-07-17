@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import { Input, Button, ListItem, Overlay, CheckBox } from 'react-native-elements'
+import { View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import { Input, Button, ListItem, Overlay, CheckBox, Icon } from 'react-native-elements'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { firebaseApp } from '../utils/firebase'
+import { size } from 'lodash'
+import DropDownPicker from 'react-native-dropdown-picker'
+import { products } from '../utils/constants'
 
 const db = firebase.firestore(firebaseApp)
 
@@ -14,6 +17,12 @@ export default function EditOrder({ route }) {
     const [showArticleModal, setShowArticleModal] = useState(false)
     const [showEditArticleError, setShowEditArticleError] = useState(false)
     const [articlePosition, setArticlePosition] = useState(null)
+    const [addNewArticle, setAddNewArticle] = useState(false)
+    const [newArticle, setNewArticle] = useState({
+        articleName: '',
+        articleWeightType: '',
+        articleCount: ''
+    })
 
     const { 
         id,
@@ -30,6 +39,12 @@ export default function EditOrder({ route }) {
         observation: observation,
         createDate: createDate, // acá podriamos mandar la hora que actualizo
         createBy: createBy
+    }
+
+    const defaultArticle = {
+        articleName: '',
+        articleWeightType: '',
+        articleCount: ''
     }
 
     const editOrderFirebase = () => {
@@ -78,10 +93,16 @@ export default function EditOrder({ route }) {
         setArticle(article)
         setShowArticleModal(true)
         setArticlePosition(idx)
+        setAddNewArticle(false)
     }
 
     const saveEditedArticle = () => {
-        console.log("ORDEN ACTUALIZADA: ", order)
+        if(addNewArticle) {
+            listArticle.push(newArticle)
+            setNewArticle(defaultArticle)
+        }
+
+        setShowArticleModal(false)
     }
 
     const onChangeOrder = (e, type) => {
@@ -92,75 +113,116 @@ export default function EditOrder({ route }) {
     }
 
     const onChangeArticleInOrderByPositionFn = (e, type) => {
-        //console.log("articlePosition: ", articlePosition)
-        //console.log("Que muestra? -> ", article)
-        //console.log("listArticle: ", listArticle[articlePosition])
-        //console.log("BARCELONA: " , listArticle[articlePosition][type])
+        console.log("e- ", e, " - type: ", type)
         listArticle[articlePosition][type] = e
         return setOrder({
             ...order
         })
     }
 
+    const onChangeNewArticleFn = (e, type) => {
+        console.log("e- ", e, " - type: ", type)
+        return setNewArticle({
+            ...newArticle,
+            [type]: e
+        })
+    }
+
+    const deleteArticleFn = () => {
+        listArticle.splice(articlePosition, 1)
+        setShowArticleModal(false)
+    }
+
+    const addNewArticleFn = () => {
+        setShowArticleModal(true)
+        setArticle(defaultArticle)
+        setAddNewArticle(true)
+    }
+
+    // si no es de hoy el pedido le escondo el boton de actualizar
+
     return (
-        <View>
-            <Input 
+        <SafeAreaView style={styles.containerScroll}>
+            <ScrollView>
+                <Input 
                     placeholder = 'Nombre'
                     containerStyle = { styles.inputName }
                     onChangeOrder = { e => onChangeOrder(e.nativeEvent.text, 'name') }
                     defaultValue = { name }
-            />
+                />
 
-            <View style={styles.articleList}>
-                {
-                    listArticle.length > 0 &&
-                    <Text style={styles.articlesAddedListTitle}>Artículos agregados</Text>
-                }
-                
-                {
-                    listArticle.map((a, idx) => (
-                        <ListItem
-                            key={idx}
-                            title = { a.articleName }
-                            leftIcon = {{ 
-                                name: "pencil",
-                                type: 'material-community'
-                            }}
-                            chevron
-                            containerStyle = { styles.menuItem }
-                            onPress = {() => showEditModalFn(a, idx)}
+                <View style={styles.articleList}>
+                    {
+                        listArticle.length > 0 &&
+                        <Text style={styles.articlesAddedListTitle}>Artículos agregados</Text>
+                    }
+                    
+                    {
+                        listArticle.map((a, idx) => (
+                            <ListItem
+                                key={idx}
+                                title = { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
+                                leftIcon = {{ 
+                                    name: "pencil",
+                                    type: 'material-community'
+                                }}
+                                chevron
+                                containerStyle = { styles.menuItem }
+                                onPress = {() => showEditModalFn(a, idx)}
+                            />
+                        ))
+                    }
+                </View>
+
+                <Button 
+                    title = 'artículo'
+                    containerStyle = { styles.btnAddArticleMain }
+                    buttonStyle = { styles.btnSendOrder }
+                    onPress = { addNewArticleFn }
+                    icon={
+                        <Icon
+                        name="plus"
+                        type="material-community"
+                        size={23}
+                        color="#fff"
                         />
-                    ))
-                }
-            </View>
+                    }
+                />
 
-            <Input 
+                <Input 
                     placeholder = 'Observacion'
                     containerStyle = { styles.inputName }
                     onChangeOrder = { e => onChangeOrder(e.nativeEvent.text, 'observation') }
                     defaultValue = { observation }
-            />
-            <Button 
-                title = 'Actualizar pedido'
-                containerStyle = { styles.btnContainer }
-                buttonStyle = { styles.btnSendOrder }
-                onPress = { editOrderFirebase }
-            />
-
-            {
-                showArticleModal && 
-                <ArticleModal 
-                    showArticleModal = { showArticleModal } 
-                    setShowArticleModal = { setShowArticleModal }
-                    article = { article }
-                    saveEditedArticle = { saveEditedArticle }
-                    showEditArticleError = { showEditArticleError }
-                    onChangeOrder = {(e, type) => onChangeOrder(e, type)}
-                    onChangeArticleInOrderByPositionFn = {(e, type) => onChangeArticleInOrderByPositionFn(e, type)}
                 />
-            }
+                <Button 
+                    title = 'Actualizar pedido'
+                    containerStyle = { styles.btnContainer }
+                    buttonStyle = { styles.btnSendOrder }
+                    onPress = { editOrderFirebase }
+                />
 
-        </View>
+                {
+                    showArticleModal && 
+                    <ArticleModal 
+                        showArticleModal = { showArticleModal } 
+                        setShowArticleModal = { setShowArticleModal }
+                        article = { article }
+                        saveEditedArticle = { saveEditedArticle }
+                        showEditArticleError = { showEditArticleError }
+                        onChangeOrder = {(e, type) => onChangeOrder(e, type)}
+                        onChangeArticleInOrderByPositionFn = {(e, type) => onChangeArticleInOrderByPositionFn(e, type)}
+                        deleteArticleFn = { deleteArticleFn }
+                        addNewArticle = { addNewArticle }
+                        onChangeNewArticleFn = { onChangeNewArticleFn }
+                        newArticle = { newArticle }
+                        setNewArticle = { setNewArticle }
+                        products = { products }
+                    />
+                }
+
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -173,21 +235,34 @@ const ArticleModal = (props) => {
         saveEditedArticle,
         showEditArticleError,
         onChangeOrder,
-        onChangeArticleInOrderByPositionFn
+        onChangeArticleInOrderByPositionFn,
+        deleteArticleFn,
+        addNewArticle,
+        onChangeNewArticleFn,
+        newArticle,
+        setNewArticle,
+        products
     } = props
-
-    //console.log("BRAZIL -> ", props)
-    //console.log("URUGUAY -> ", article)
 
     return (
         <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)} overlayStyle = { styles.overlayContainer }>
-            <View>    
-                <Input 
-                    placeholder = 'Artículo'
-                    containerStyle = { styles.input }
-                    onChange = { e => onChangeArticleInOrderByPositionFn(e.nativeEvent.text, 'articleName') }
-                    defaultValue = { article.articleName }
-                />
+            <View>   
+                <View style = { styles.dropDown }>
+                    <DropDownPicker
+                        items = {
+                            products
+                        }
+                        defaultValue = { addNewArticle? newArticle.articleName : article.articleName }
+                        containerStyle = {{height: 40}}
+                        style = {{backgroundColor: '#fafafa'}}
+                        dropDownStyle = {{backgroundColor: '#fafafa'}}
+                        onChangeItem = {item => addNewArticle? onChangeNewArticleFn(item.value, 'articleName') : onChangeArticleInOrderByPositionFn(item.value, 'articleName')}
+                        searchable = { true }
+                        searchablePlaceholder = "Buscar artículo..."
+                        searchableError = "Artículo no encontrado"
+                        placeholder = "Selecciona un artículo"
+                    />
+                </View>
                 <View style = { styles.container }>
                     <CheckBox
                         center
@@ -195,8 +270,8 @@ const ArticleModal = (props) => {
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'kilogramos'}
-                        onPress = { () => onChangeArticleInOrderByPositionFn('kilogramos', 'articleWeightType') }
+                        checked={ addNewArticle? newArticle.articleWeightType === 'kilogramos' : article.articleWeightType === 'kilogramos'}
+                        onPress = { () => addNewArticle? onChangeNewArticleFn('kilogramos', 'articleWeightType') : onChangeArticleInOrderByPositionFn('kilogramos', 'articleWeightType') }
                     />
                     <CheckBox
                         center
@@ -204,8 +279,8 @@ const ArticleModal = (props) => {
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'tiras'}
-                        onPress = { () => onChangeArticleInOrderByPositionFn('tiras', 'articleWeightType') }
+                        checked={ addNewArticle? newArticle.articleWeightType === 'tiras' : article.articleWeightType === 'tiras'}
+                        onPress = { () => addNewArticle? onChangeNewArticleFn('tiras', 'articleWeightType') :  onChangeArticleInOrderByPositionFn('tiras', 'articleWeightType') }
                     />
                 </View>
                 <View style = { styles.container }>
@@ -215,15 +290,15 @@ const ArticleModal = (props) => {
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'unidades'}
-                        onPress = { () => onChangeArticleInOrderByPositionFn('unidades', 'articleWeightType') }
+                        checked={ addNewArticle? newArticle.articleWeightType === 'unidades' : article.articleWeightType === 'unidades'}
+                        onPress = { () => addNewArticle? onChangeNewArticleFn('unidades', 'articleWeightType') : onChangeArticleInOrderByPositionFn('unidades', 'articleWeightType') }
                     />
                 </View>
                 <Input 
                     placeholder = 'Cantidad'
                     containerStyle = { styles.input }
-                    defaultValue = { article.articleCount }
-                    onChange = { e => onChangeArticleInOrderByPositionFn(e.nativeEvent.text, 'articleCount') }
+                    defaultValue = { addNewArticle? newArticle.articleCount : article.articleCount }
+                    onChange = { e => addNewArticle? onChangeNewArticleFn(e.nativeEvent.text, 'articleCount') : onChangeArticleInOrderByPositionFn(e.nativeEvent.text, 'articleCount') }
                 />
                 {
                     showEditArticleError && 
@@ -232,17 +307,31 @@ const ArticleModal = (props) => {
                     </Text>
                 }
                 <Button 
-                    title = 'Actualizar artículo'
+                    title = { addNewArticle ? 'Agregar artículo' : 'Actualizar artículo' }
                     buttonStyle= { styles.btnStyle}
                     containerStyle = { styles.btnAddArticle }
                     onPress = { () => saveEditedArticle() }
                 />
+
+                {
+                    !addNewArticle && 
+                    <Button 
+                        title = 'Eliminar artículo'
+                        containerStyle = { styles.btnAddArticle }
+                        buttonStyle = { styles.btnDeleteArticle }
+                        onPress = { () => deleteArticleFn() }
+                    />
+                }
+                   
             </View>
         </Overlay>
     )
 }
 
 const styles = StyleSheet.create({
+    containerScroll: {
+        flex: 1
+    },
     input: {
         marginBottom: 10
     },
@@ -257,6 +346,10 @@ const styles = StyleSheet.create({
     },
     btnSendOrder: {
         backgroundColor: '#00a680'
+    },
+    btnAddArticleMain: {
+        width: '26%',
+        marginLeft: '10%'
     },
     articleList: {
         marginBottom: 20
@@ -295,4 +388,12 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         alignItems: 'center'
     },
+    btnDeleteArticle: {
+        backgroundColor: '#EC5252'
+    },
+    dropDown: {
+        marginTop: 10,
+        marginBottom: 10,
+        zIndex: 1000
+    }
 })
