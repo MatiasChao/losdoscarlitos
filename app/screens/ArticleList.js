@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Modal } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { ListItem, Text, Overlay, Input, CheckBox, Button} from 'react-native-elements'
-import { size, isEmpty, map }  from 'lodash'
 import { useNavigation } from '@react-navigation/native'
-import ModalTest from '../modals/ModalTest'
 import { products } from '../utils/constants'
 import DropDownPicker from 'react-native-dropdown-picker'
 
@@ -172,7 +170,7 @@ const ArticleModal = (props) => {
                         onChangeItem = {item => onChangeSetArticle(item.value, 'articleName') }
                         searchable = { true }
                         searchablePlaceholder = "Buscar artículo..."
-                        searchableError = "Artículo no encontrado"
+                        searchableError = { () => <Text> Artículo no encontrado </Text>} 
                         placeholder = "Selecciona un artículo"
                     />
                 </View>

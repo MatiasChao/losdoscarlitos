@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking, TouchableOpacity, ListHeaderComponent } from 'react-native'
 import { Input, Button, Icon, CheckBox, Overlay, ListItem } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
 import Toast from 'react-native-easy-toast'
@@ -186,7 +186,7 @@ export default function Order({ route }) {
                 </View>
             }
 
-        <Loading isVisible = { isLoading } text = 'Enviando pedido' />
+            <Loading isVisible = { isLoading } text = 'Enviando pedido' />
             
         </ScrollView>
     )

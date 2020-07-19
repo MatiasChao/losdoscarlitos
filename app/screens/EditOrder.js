@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
 import { Input, Button, ListItem, Overlay, CheckBox, Icon } from 'react-native-elements'
+
+import Loading from '../components/Loading'
+import DropDownPicker from 'react-native-dropdown-picker'
+
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { firebaseApp } from '../utils/firebase'
-import { size } from 'lodash'
-import DropDownPicker from 'react-native-dropdown-picker'
+
 import { products } from '../utils/constants'
 
 const db = firebase.firestore(firebaseApp)
@@ -18,10 +21,17 @@ export default function EditOrder({ route }) {
     const [showEditArticleError, setShowEditArticleError] = useState(false)
     const [articlePosition, setArticlePosition] = useState(null)
     const [addNewArticle, setAddNewArticle] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [newArticle, setNewArticle] = useState({
         articleName: '',
         articleWeightType: '',
         articleCount: ''
+    })
+
+    const [messageUpdateOrder, setMessageUpdateOrder] = useState({
+        message: '',
+        status: '',
+        view: false
     })
 
     const { 
@@ -48,27 +58,33 @@ export default function EditOrder({ route }) {
     }
 
     const editOrderFirebase = () => {
-        //setIsLoading(true)
+        setIsLoading(true)
 
-        console.log("ID: ", id)
-
-        console.log("Actualizar nombre: ", name)
-        console.log("Actualizar pedidos: ", listArticle)
-        console.log("Actualizar observation: ", observation)
-
-        /*
         db.collection('orders').doc(id).update({
             "name" : name,
             "listArticle" : listArticle,
             "observation" : observation,
         })
         .then(
-            console.log("Se actualizo")
+            console.log("Se actualizo"),
+            setMessageUpdateOrder({
+                ...messageUpdateOrder, 
+                message: 'Se actualizó correctamente', 
+                status: 'success',
+                view: true
+            })
         )
         .catch(() => {
-            console.log("Fallo algo al actualizar")
+            console.log("Fallo algo al actualizar"),
+            setMessageUpdateOrder({
+                ...messageUpdateOrder, 
+                message: 'Algo falló al actualizar el pedido', 
+                status: 'error',
+                view: true
+            })
         })
-        */
+
+        setIsLoading(false)
 
             /*
             db.collection("orders").where("id", "==", id)
@@ -113,7 +129,6 @@ export default function EditOrder({ route }) {
     }
 
     const onChangeArticleInOrderByPositionFn = (e, type) => {
-        console.log("e- ", e, " - type: ", type)
         listArticle[articlePosition][type] = e
         return setOrder({
             ...order
@@ -121,7 +136,6 @@ export default function EditOrder({ route }) {
     }
 
     const onChangeNewArticleFn = (e, type) => {
-        console.log("e- ", e, " - type: ", type)
         return setNewArticle({
             ...newArticle,
             [type]: e
@@ -203,6 +217,15 @@ export default function EditOrder({ route }) {
                 />
 
                 {
+                    messageUpdateOrder.view &&
+                    <Text style = { messageUpdateOrder.status == 'success'? styles.messageSendOrderSuccess : styles.messageSendOrderError }>
+                        {
+                            messageUpdateOrder.message
+                        }
+                    </Text>
+                }
+
+                {
                     showArticleModal && 
                     <ArticleModal 
                         showArticleModal = { showArticleModal } 
@@ -220,6 +243,8 @@ export default function EditOrder({ route }) {
                         products = { products }
                     />
                 }
+
+                <Loading isVisible = { isLoading } text = 'Actualizando pedido' />
 
             </ScrollView>
         </SafeAreaView>
@@ -252,14 +277,14 @@ const ArticleModal = (props) => {
                         items = {
                             products
                         }
-                        defaultValue = { addNewArticle? newArticle.articleName : article.articleName }
+                        defaultValue = { !addNewArticle && article.articleName }
                         containerStyle = {{height: 40}}
                         style = {{backgroundColor: '#fafafa'}}
                         dropDownStyle = {{backgroundColor: '#fafafa'}}
                         onChangeItem = {item => addNewArticle? onChangeNewArticleFn(item.value, 'articleName') : onChangeArticleInOrderByPositionFn(item.value, 'articleName')}
                         searchable = { true }
                         searchablePlaceholder = "Buscar artículo..."
-                        searchableError = "Artículo no encontrado"
+                        searchableError = { () => <Text> Artículo no encontrado </Text> } 
                         placeholder = "Selecciona un artículo"
                     />
                 </View>
@@ -349,7 +374,8 @@ const styles = StyleSheet.create({
     },
     btnAddArticleMain: {
         width: '26%',
-        marginLeft: '10%'
+        marginLeft: '10%',
+        marginBottom: 10
     },
     articleList: {
         marginBottom: 20
@@ -395,5 +421,17 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         zIndex: 1000
+    },
+    messageSendOrderSuccess: {
+        marginTop: 20,
+        marginLeft: 70,
+        color: 'green',
+        fontSize: 15
+    },
+    messageSendOrderError: {
+        marginTop: 20,
+        marginLeft: 70,
+        color: 'red',
+        fontSize: 15
     }
 })
