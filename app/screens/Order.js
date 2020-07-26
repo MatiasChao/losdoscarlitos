@@ -9,11 +9,11 @@ import Loading from '../components/Loading'
 import qs from 'qs';
 import { productos } from '../utils/constants'
 import 'firebase/firestore'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import ModalTest from '../modals/ModalTest'
 const db = firebase.firestore(firebaseApp)
 
-export default function Order({ route }) {
+export default function Order ({ route }) {
 
     const nagivation = useNavigation()
     const toastRef = useRef()
@@ -34,7 +34,9 @@ export default function Order({ route }) {
 
     const [state, setState] = useState(defaultOrder)
 
+    /*
     useEffect(() => {
+        console.log("LOL", defaultOrder)
         setState(defaultOrder)
 
         // nos traemos la info del usuario logueado
@@ -46,6 +48,23 @@ export default function Order({ route }) {
                 setUser(userInfo)
             })
     }, [route])
+    */
+
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log("LOL", route)
+            setState(defaultOrder)
+    
+            // nos traemos la info del usuario logueado
+            // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
+            // con esa variable guardada chequeo asi no lo vuelvo a llamar
+           firebase
+                .auth()
+                .onAuthStateChanged((userInfo) => {
+                    setUser(userInfo)
+                })
+        }, [route])
+    );
 
     const onChangeSetState = (e, type) => {
 

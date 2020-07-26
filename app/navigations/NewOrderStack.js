@@ -20,31 +20,15 @@ export default function NewOrderStack() {
                 name = "order"
                 component = { Order }
                 options = {{ 
-                    title: 'Nota de Pedido',
-                    /*
-                    headerRight: () => (
-                        <Button
-                          onPress={() => nagivation.navigate('articleList')}
-                          color="#fff"
-                          containerStyle={styles.btnContainer}
-                          buttonStyle = { styles.btn }
-                          icon={
-                            <Icon
-                              name="cart-arrow-right"
-                              type="material-community"
-                              size={20}
-                              color="white"
-                            />
-                          }
-                        />
-                      )
-                      */
+                    title: 'Nota de Pedido'
                 }}
            />
             <Stack.Screen
                 name = 'articleList'
                 component = { ArticleList }
-                options = {{ title: "Artículos" }}
+                options = {{ 
+                  title: "Artículos" 
+                }}
             />
 
             <Stack.Screen
@@ -69,21 +53,6 @@ export default function NewOrderStack() {
                     )
                 }}
             />
-            
-                {
-                    // TODO: SE PUEDE BORRAR? LO TENGO EN EL OTRO : OrderListStack
-                    /**
-                     * <Stack.Screen
-                            name = 'orderList'
-                            component = { OrderList }
-                            options = {{
-                                title: "Lista de Pedidos"
-                            }}
-                        />
-                     * 
-                     */
-                }
-            
        </Stack.Navigator>
     )
 }

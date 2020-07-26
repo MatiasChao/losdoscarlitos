@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
 import { Input, Button, ListItem, Overlay, CheckBox, Icon } from 'react-native-elements'
 
@@ -57,9 +57,16 @@ export default function EditOrder({ route }) {
         articleCount: ''
     }
 
+    useEffect(() => {
+        console.log("LLEGANDO A EDIT ORDER")
+    }, [])
+
     const editOrderFirebase = () => {
         setIsLoading(true)
 
+        console.log("NONBRE: ", name)
+
+        /*
         db.collection('orders').doc(id).update({
             "name" : name,
             "listArticle" : listArticle,
@@ -83,6 +90,8 @@ export default function EditOrder({ route }) {
                 view: true
             })
         })
+
+        */
 
         setIsLoading(false)
 
@@ -161,7 +170,7 @@ export default function EditOrder({ route }) {
                 <Input 
                     placeholder = 'Nombre'
                     containerStyle = { styles.inputName }
-                    onChangeOrder = { e => onChangeOrder(e.nativeEvent.text, 'name') }
+                    onChange = { e => onChangeOrder(e.nativeEvent.text, 'name') }
                     defaultValue = { name }
                 />
 
@@ -206,7 +215,7 @@ export default function EditOrder({ route }) {
                 <Input 
                     placeholder = 'Observacion'
                     containerStyle = { styles.inputName }
-                    onChangeOrder = { e => onChangeOrder(e.nativeEvent.text, 'observation') }
+                    onChange = { e => onChangeOrder(e.nativeEvent.text, 'observation') }
                     defaultValue = { observation }
                 />
                 <Button 
@@ -317,6 +326,15 @@ const ArticleModal = (props) => {
                         containerStyle = { styles.checkbox }
                         checked={ addNewArticle? newArticle.articleWeightType === 'unidades' : article.articleWeightType === 'unidades'}
                         onPress = { () => addNewArticle? onChangeNewArticleFn('unidades', 'articleWeightType') : onChangeArticleInOrderByPositionFn('unidades', 'articleWeightType') }
+                    />
+                    <CheckBox
+                        center
+                        title='Ganchos'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = { styles.checkbox }
+                        checked={ addNewArticle? newArticle.articleWeightType === 'ganchos' : article.articleWeightType === 'ganchos'}
+                        onPress = { () => addNewArticle? onChangeNewArticleFn('ganchos', 'articleWeightType') : onChangeArticleInOrderByPositionFn('ganchos', 'articleWeightType') }
                     />
                 </View>
                 <Input 

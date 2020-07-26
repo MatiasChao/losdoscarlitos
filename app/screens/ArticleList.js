@@ -205,6 +205,15 @@ const ArticleModal = (props) => {
                         checked={article.articleWeightType === 'unidades'}
                         onPress = { () => onChangeSetArticle('unidades', 'articleWeightType') }
                     />
+                    <CheckBox
+                        center
+                        title='Gancho'
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle = { styles.checkbox }
+                        checked={article.articleWeightType === 'gancho'}
+                        onPress = { () => onChangeSetArticle('gancho', 'articleWeightType') }
+                    />
                 </View>
                 <Input 
                     placeholder = 'Cantidad'
@@ -262,7 +271,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row', 
         alignSelf: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 5
     },
     btnAddArticle: {
         marginTop: 10,
@@ -277,7 +287,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#EC5252'
     },
     input: {
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 20
     },
     textAddArticleError: {
         color: 'red',
