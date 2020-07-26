@@ -207,12 +207,12 @@ const ArticleModal = (props) => {
                     />
                     <CheckBox
                         center
-                        title='Gancho'
+                        title='Ganchos'
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
                         containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'gancho'}
-                        onPress = { () => onChangeSetArticle('gancho', 'articleWeightType') }
+                        checked={article.articleWeightType === 'ganchos'}
+                        onPress = { () => onChangeSetArticle('ganchos', 'articleWeightType') }
                     />
                 </View>
                 <Input 

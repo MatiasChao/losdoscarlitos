@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
@@ -7,10 +7,7 @@ import OrderListStack from './OrderListStack'
 import NewOrderStack from './NewOrderStack'
 import AccountStack from './AccountStack'
 
-import { firebaseApp } from '../utils/firebase'
-import firebase from 'firebase/app'
-
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
     return (
