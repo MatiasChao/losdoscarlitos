@@ -27,29 +27,15 @@ export default function EditOrder({ route }) {
         articleWeightType: '',
         articleCount: ''
     })
-
     const [messageUpdateOrder, setMessageUpdateOrder] = useState({
         message: '',
         status: '',
         view: false
     })
 
-    const { 
-        id,
-        name, 
-        listArticle,
-        observation,
-        createDate,
-        createBy
-    } = route.params.order 
-
-    const orderToEdit = {
-        name: name,
-        listArticle: listArticle,
-        observation: observation,
-        createDate: createDate, // acá podriamos mandar la hora que actualizo
-        createBy: createBy
-    }
+    useEffect(() => {
+        setOrder(route.params.order)
+    }, [])
 
     const defaultArticle = {
         articleName: '',
@@ -57,20 +43,13 @@ export default function EditOrder({ route }) {
         articleCount: ''
     }
 
-    useEffect(() => {
-        console.log("LLEGANDO A EDIT ORDER")
-    }, [])
-
     const editOrderFirebase = () => {
         setIsLoading(true)
 
-        console.log("NONBRE: ", name)
-
-        /*
         db.collection('orders').doc(id).update({
-            "name" : name,
-            "listArticle" : listArticle,
-            "observation" : observation,
+            "name" : order.name,
+            "listArticle" : order.listArticle,
+            "observation" : order.observation,
         })
         .then(
             console.log("Se actualizo"),
@@ -90,8 +69,6 @@ export default function EditOrder({ route }) {
                 view: true
             })
         })
-
-        */
 
         setIsLoading(false)
 
@@ -114,7 +91,6 @@ export default function EditOrder({ route }) {
     }
 
     const showEditModalFn = (article, idx) => {
-        setOrder(orderToEdit)
         setArticle(article)
         setShowArticleModal(true)
         setArticlePosition(idx)
@@ -123,7 +99,7 @@ export default function EditOrder({ route }) {
 
     const saveEditedArticle = () => {
         if(addNewArticle) {
-            listArticle.push(newArticle)
+            order.listArticle.push(newArticle)
             setNewArticle(defaultArticle)
         }
 
@@ -138,7 +114,7 @@ export default function EditOrder({ route }) {
     }
 
     const onChangeArticleInOrderByPositionFn = (e, type) => {
-        listArticle[articlePosition][type] = e
+        order.listArticle[articlePosition][type] = e
         return setOrder({
             ...order
         })
@@ -152,7 +128,7 @@ export default function EditOrder({ route }) {
     }
 
     const deleteArticleFn = () => {
-        listArticle.splice(articlePosition, 1)
+        order.listArticle.splice(articlePosition, 1)
         setShowArticleModal(false)
     }
 
@@ -166,96 +142,98 @@ export default function EditOrder({ route }) {
 
     return (
         <SafeAreaView style={styles.containerScroll}>
-            <ScrollView>
-                <Input 
-                    placeholder = 'Nombre'
-                    containerStyle = { styles.inputName }
-                    onChange = { e => onChangeOrder(e.nativeEvent.text, 'name') }
-                    defaultValue = { name }
-                />
+            {
+                order && 
+                <ScrollView>
+                    <Input 
+                        placeholder = 'Nombre'
+                        containerStyle = { styles.inputName }
+                        onChange = { e => onChangeOrder(e.nativeEvent.text, 'name') }
+                        defaultValue = { order.name }
+                    />
 
-                <View style={styles.articleList}>
-                    {
-                        listArticle.length > 0 &&
-                        <Text style={styles.articlesAddedListTitle}>Artículos agregados</Text>
-                    }
-                    
-                    {
-                        listArticle.map((a, idx) => (
-                            <ListItem
-                                key={idx}
-                                title = { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
-                                leftIcon = {{ 
-                                    name: "pencil",
-                                    type: 'material-community'
-                                }}
-                                chevron
-                                containerStyle = { styles.menuItem }
-                                onPress = {() => showEditModalFn(a, idx)}
+                    <View style={styles.articleList}>
+                        {
+                            order.listArticle.length > 0 &&
+                            <Text style={styles.articlesAddedListTitle}>Artículos agregados</Text>
+                        }
+                        
+                        {
+                            order.listArticle.map((a, idx) => (
+                                <ListItem
+                                    key={idx}
+                                    title = { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
+                                    leftIcon = {{ 
+                                        name: "pencil",
+                                        type: 'material-community'
+                                    }}
+                                    chevron
+                                    containerStyle = { styles.menuItem }
+                                    onPress = {() => showEditModalFn(a, idx)}
+                                />
+                            ))
+                        }
+                    </View>
+
+                    <Button 
+                        title = 'artículo'
+                        containerStyle = { styles.btnAddArticleMain }
+                        buttonStyle = { styles.btnSendOrder }
+                        onPress = { addNewArticleFn }
+                        icon={
+                            <Icon
+                            name="plus"
+                            type="material-community"
+                            size={23}
+                            color="#fff"
                             />
-                        ))
-                    }
-                </View>
+                        }
+                    />
 
-                <Button 
-                    title = 'artículo'
-                    containerStyle = { styles.btnAddArticleMain }
-                    buttonStyle = { styles.btnSendOrder }
-                    onPress = { addNewArticleFn }
-                    icon={
-                        <Icon
-                        name="plus"
-                        type="material-community"
-                        size={23}
-                        color="#fff"
+                    <Input 
+                        placeholder = 'Observacion'
+                        containerStyle = { styles.inputName }
+                        onChange = { e => onChangeOrder(e.nativeEvent.text, 'observation') }
+                        defaultValue = { order.observation }
+                    />
+                    <Button 
+                        title = 'Actualizar pedido'
+                        containerStyle = { styles.btnContainer }
+                        buttonStyle = { styles.btnSendOrder }
+                        onPress = { editOrderFirebase }
+                    />
+
+                    {
+                        messageUpdateOrder.view &&
+                        <Text style = { messageUpdateOrder.status == 'success'? styles.messageSendOrderSuccess : styles.messageSendOrderError }>
+                            {
+                                messageUpdateOrder.message
+                            }
+                        </Text>
+                    }
+
+                    {
+                        showArticleModal && 
+                        <ArticleModal 
+                            showArticleModal = { showArticleModal } 
+                            setShowArticleModal = { setShowArticleModal }
+                            article = { article }
+                            saveEditedArticle = { saveEditedArticle }
+                            showEditArticleError = { showEditArticleError }
+                            onChangeOrder = {(e, type) => onChangeOrder(e, type)}
+                            onChangeArticleInOrderByPositionFn = {(e, type) => onChangeArticleInOrderByPositionFn(e, type)}
+                            deleteArticleFn = { deleteArticleFn }
+                            addNewArticle = { addNewArticle }
+                            onChangeNewArticleFn = { onChangeNewArticleFn }
+                            newArticle = { newArticle }
+                            setNewArticle = { setNewArticle }
+                            products = { products }
                         />
                     }
-                />
-
-                <Input 
-                    placeholder = 'Observacion'
-                    containerStyle = { styles.inputName }
-                    onChange = { e => onChangeOrder(e.nativeEvent.text, 'observation') }
-                    defaultValue = { observation }
-                />
-                <Button 
-                    title = 'Actualizar pedido'
-                    containerStyle = { styles.btnContainer }
-                    buttonStyle = { styles.btnSendOrder }
-                    onPress = { editOrderFirebase }
-                />
-
-                {
-                    messageUpdateOrder.view &&
-                    <Text style = { messageUpdateOrder.status == 'success'? styles.messageSendOrderSuccess : styles.messageSendOrderError }>
-                        {
-                            messageUpdateOrder.message
-                        }
-                    </Text>
-                }
-
-                {
-                    showArticleModal && 
-                    <ArticleModal 
-                        showArticleModal = { showArticleModal } 
-                        setShowArticleModal = { setShowArticleModal }
-                        article = { article }
-                        saveEditedArticle = { saveEditedArticle }
-                        showEditArticleError = { showEditArticleError }
-                        onChangeOrder = {(e, type) => onChangeOrder(e, type)}
-                        onChangeArticleInOrderByPositionFn = {(e, type) => onChangeArticleInOrderByPositionFn(e, type)}
-                        deleteArticleFn = { deleteArticleFn }
-                        addNewArticle = { addNewArticle }
-                        onChangeNewArticleFn = { onChangeNewArticleFn }
-                        newArticle = { newArticle }
-                        setNewArticle = { setNewArticle }
-                        products = { products }
-                    />
-                }
 
                 <Loading isVisible = { isLoading } text = 'Actualizando pedido' />
-
             </ScrollView>
+            }
         </SafeAreaView>
     )
 }

@@ -18,7 +18,7 @@ export default function OrderListByUser(props) {
                 size(orders) > 0 ? 
                     <FlatList 
                         data = { orders }
-                        renderItem = { (order) => <Order order = { order} navigation = { navigation } />}
+                        renderItem = { (order) => <Order order = { order } navigation = { navigation } />}
                         keyExtractor = {(item, index) => index.toString()}
                     />
                     :

@@ -52,7 +52,6 @@ export default function Order ({ route }) {
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log("LOL", route)
             setState(defaultOrder)
     
             // nos traemos la info del usuario logueado
@@ -106,9 +105,6 @@ export default function Order ({ route }) {
     }
 
     const sendOrder = () => {
-        console.log("ENVIAR PEDIDO........")
-        console.log("STATE: " , state)
-
         if(state.name === '') {
             showErrorName(true)
         }   

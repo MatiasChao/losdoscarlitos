@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { StyleSheet } from 'react-native'
 
 import Order from '../screens/Order'
 import ArticleList from '../screens/ArticleList'
