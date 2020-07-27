@@ -46,7 +46,7 @@ export default function EditOrder({ route }) {
     const editOrderFirebase = () => {
         setIsLoading(true)
 
-        db.collection('orders').doc(id).update({
+        db.collection('orders').doc(order.id).update({
             "name" : order.name,
             "listArticle" : order.listArticle,
             "observation" : order.observation,
