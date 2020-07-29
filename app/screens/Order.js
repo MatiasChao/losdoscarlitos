@@ -23,22 +23,17 @@ export default function Order ({ route }) {
     // mejorar esto con un objeto
     const [errorName, showErrorName] = useState(false)
     const [errorListArticleEmpty, setErrorListArticleEmpty] = useState(false)
-    
-    const defaultOrder = {
+    const [state, setState] = useState({
         name: '',
         listArticle: [],
         observation: '',
         createDate: new Date(),
         createBy: ''
-    }
+    })
 
-    const [state, setState] = useState(defaultOrder)
-
-    /*
     useEffect(() => {
-        console.log("LOL", defaultOrder)
-        setState(defaultOrder)
-
+        //console.log("llega al useEffect", state)
+        
         // nos traemos la info del usuario logueado
         // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
         // con esa variable guardada chequeo asi no lo vuelvo a llamar
@@ -48,22 +43,6 @@ export default function Order ({ route }) {
                 setUser(userInfo)
             })
     }, [route])
-    */
-
-    useFocusEffect(
-        React.useCallback(() => {
-            setState(defaultOrder)
-    
-            // nos traemos la info del usuario logueado
-            // la guardo en una variable asi cuando se modifica el state no va a buscarlo de nuevo
-            // con esa variable guardada chequeo asi no lo vuelvo a llamar
-           firebase
-                .auth()
-                .onAuthStateChanged((userInfo) => {
-                    setUser(userInfo)
-                })
-        }, [route])
-    );
 
     const onChangeSetState = (e, type) => {
 
@@ -118,6 +97,8 @@ export default function Order ({ route }) {
             setErrorListArticleEmpty(false)
         }
     }
+
+    console.log("state --> ", state)
 
     return(
         <ScrollView style = { styles.scrollView }>

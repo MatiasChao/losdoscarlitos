@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { ListItem, Text, Overlay, Input, CheckBox, Button} from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, TextInput } from 'react-native'
+import { ListItem, Text, Overlay, Input, CheckBox, Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { products } from '../utils/constants'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -29,6 +29,10 @@ export default function ArticleList({ route }) {
         articleWeightType: '',
         articleCount: ''
     })
+
+    useEffect(() => {
+        console.log("STATE: ", state)
+    }, [])
 
     // esta funcion se llama del listado de articulos (cuando cliqueamos uno)
     const showEditModalFn = (article, idx) => {
@@ -217,6 +221,7 @@ const ArticleModal = (props) => {
                 </View>
                 <Input 
                     placeholder = 'Cantidad'
+                    keyboardType = "numeric"
                     containerStyle = { styles.input }
                     onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
                     defaultValue = { article.articleCount }
