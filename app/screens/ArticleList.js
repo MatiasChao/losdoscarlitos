@@ -30,10 +30,6 @@ export default function ArticleList({ route }) {
         articleCount: ''
     })
 
-    useEffect(() => {
-        console.log("STATE: ", state)
-    }, [])
-
     // esta funcion se llama del listado de articulos (cuando cliqueamos uno)
     const showEditModalFn = (article, idx) => {
         setArticle(article)

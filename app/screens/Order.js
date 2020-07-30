@@ -31,6 +31,14 @@ export default function Order ({ route }) {
         createBy: ''
     })
 
+    const defaultOrder = {
+        name: '',
+        listArticle: [],
+        observation: '',
+        createDate: new Date(),
+        createBy: ''
+    }
+
     useEffect(() => {
         //console.log("llega al useEffect", state)
         
@@ -74,7 +82,7 @@ export default function Order ({ route }) {
             })
             .then(() => {
                 setIsLoading(false)
-                console.log("OK")
+                setState(defaultOrder)
                 nagivation.navigate('orderList') // cuando envia el pedido lo mandamos a la lista de pedidos enviados
             })
             .catch(() => {
@@ -97,8 +105,6 @@ export default function Order ({ route }) {
             setErrorListArticleEmpty(false)
         }
     }
-
-    console.log("state --> ", state)
 
     return(
         <ScrollView style = { styles.scrollView }>
@@ -154,6 +160,7 @@ export default function Order ({ route }) {
                     placeholder = 'Observaciones'
                     containerStyle = { styles.inputObservation }
                     onChange = { e => onChangeSetState(e.nativeEvent.text, 'observation') }
+                    defaultValue = { state.observation }
                 />
             </View>
 
