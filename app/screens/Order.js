@@ -78,7 +78,8 @@ export default function Order ({ route }) {
                 listArticle: state.listArticle,
                 observation: state.observation,
                 createDate: new Date(),
-                createBy: firebase.auth().currentUser.uid
+                createById: firebase.auth().currentUser.uid,
+                createByName: firebase.auth().currentUser.displayName
             })
             .then(() => {
                 setIsLoading(false)
