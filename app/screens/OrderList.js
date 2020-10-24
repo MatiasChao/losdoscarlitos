@@ -40,7 +40,7 @@ export default function OrderList() {
         const resultOrders = []
 
         db.collection('orders')
-            .where('createBy', '==', idUser)
+            .where('createById', '==', idUser)
             .orderBy('createDate', 'desc')
             .limit(limitOrders)
             .get()

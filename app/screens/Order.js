@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, Linking, TouchableOpacity, ListHeaderComponent } from 'react-native'
 import { Input, Button, Icon, CheckBox, Overlay, ListItem } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -28,7 +28,9 @@ export default function Order ({ route }) {
         listArticle: [],
         observation: '',
         createDate: new Date(),
-        createBy: ''
+        createById: '',
+        createByName: '',
+        print: false
     })
 
     const defaultOrder = {
@@ -36,7 +38,9 @@ export default function Order ({ route }) {
         listArticle: [],
         observation: '',
         createDate: new Date(),
-        createBy: ''
+        createById: '',
+        createByName: '',
+        print: false
     }
 
     useEffect(() => {
@@ -79,7 +83,8 @@ export default function Order ({ route }) {
                 observation: state.observation,
                 createDate: new Date(),
                 createById: firebase.auth().currentUser.uid,
-                createByName: firebase.auth().currentUser.displayName
+                createByName: firebase.auth().currentUser.displayName,
+                print: false
             })
             .then(() => {
                 setIsLoading(false)
@@ -108,7 +113,10 @@ export default function Order ({ route }) {
     }
 
     return(
-        <ScrollView style = { styles.scrollView }>
+        <Fragment>
+            {
+                user?
+                <ScrollView style = { styles.scrollView }>
             <View>
                 <Input 
                     placeholder = 'Nombre'
@@ -177,22 +185,23 @@ export default function Order ({ route }) {
                 }
             </View>   
 
-            {
-                user?
                 <Button 
                     title = 'Enviar pedido'
                     containerStyle = { styles.btnContainer }
                     buttonStyle = { styles.btnSendOrder }
                     onPress = { sendOrder }
-                /> :
-                <View style={styles.textLoginView}>
-                    <Text style={styles.loginText}> Necesitas iniciar sesión para envíar pedidos </Text>
-                </View>
-            }
-
+                /> 
+            
             <Loading isVisible = { isLoading } text = 'Enviando pedido' />
             
         </ScrollView>
+        :
+        <View style={styles.textLoginView}>
+            <Text style={styles.loginText}> Necesitas iniciar sesión para envíar pedidos </Text>
+        </View>
+            }
+        </Fragment>
+        
     )
 }
 
@@ -264,10 +273,13 @@ const styles = StyleSheet.create({
         color: 'red'
     },
     textLoginView: {
+        marginTop: '10%',
         alignItems: 'center'
     },
     loginText: {
         color: '#00a680',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        width: 250,
+        textAlign: 'center'
     }
 })

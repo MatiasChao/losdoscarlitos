@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements'
-import { isEmpty } from 'lodash'
 import { useNavigation } from '@react-navigation/native'
+import { isEmpty } from 'lodash'
+
 import * as firebase from 'firebase'
 import { validateEmail } from '../../utils/validations'
 import Loading from '../Loading'

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
 import { Input, Button, ListItem, Overlay, CheckBox, Icon } from 'react-native-elements'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import Loading from '../components/Loading'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -258,7 +259,7 @@ const ArticleModal = (props) => {
 
     return (
         <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)} overlayStyle = { styles.overlayContainer }>
-            <View>   
+            <KeyboardAwareScrollView>   
                 <View style = { styles.dropDown }>
                     <DropDownPicker
                         items = {
@@ -344,7 +345,7 @@ const ArticleModal = (props) => {
                     />
                 }
                    
-            </View>
+            </KeyboardAwareScrollView>
         </Overlay>
     )
 }

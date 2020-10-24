@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, TextInput } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet } from 'react-native'
 import { ListItem, Text, Overlay, Input, CheckBox, Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
-import { products } from '../utils/constants'
 import DropDownPicker from 'react-native-dropdown-picker'
+
+import { products } from '../utils/constants'
 
 export default function ArticleList({ route }) {
 
@@ -154,98 +155,102 @@ const ArticleModal = (props) => {
         deleteArticle
     } = props
 
+     const keyboardVerticalOffset = Platform.OS === 'ios' ? '70%' : 0
+
     return (
-        <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
-            <View style = { styles.viewForm }>  
+        <View>
+            <Overlay avoidKeyboard={true} isVisible={showArticleModal} overlayStyle={{ height: keyboardVerticalOffset}} onBackdropPress={() => setShowArticleModal(!showArticleModal)}>
+                <View style = { styles.viewForm }>  
 
-                <View style = { styles.dropDown }>
-                    <DropDownPicker
-                        items = {
-                            products
-                        }
-                        defaultValue = { article.articleName }
-                        containerStyle = {{height: 40}}
-                        style = {{backgroundColor: '#fafafa'}}
-                        dropDownStyle = {{backgroundColor: '#fafafa'}}
-                        onChangeItem = {item => onChangeSetArticle(item.value, 'articleName') }
-                        searchable = { true }
-                        searchablePlaceholder = "Buscar artículo..."
-                        searchableError = { () => <Text> Artículo no encontrado </Text>} 
-                        placeholder = "Selecciona un artículo"
-                    />
-                </View>
+                    <View style = { styles.dropDown }>
+                        <DropDownPicker
+                            items = {
+                                products
+                            }
+                            defaultValue = { article.articleName }
+                            containerStyle = {{height: 40}}
+                            style = {{backgroundColor: '#fafafa'}}
+                            dropDownStyle = {{backgroundColor: '#fafafa'}}
+                            onChangeItem = {item => onChangeSetArticle(item.value, 'articleName') }
+                            searchable = { true }
+                            searchablePlaceholder = "Buscar artículo..."
+                            searchableError = { () => <Text> Artículo no encontrado </Text>} 
+                            placeholder = "Selecciona un artículo"
+                        />
+                    </View>
 
-                <View style = { styles.container }>
-                    <CheckBox
-                        center
-                        title='Kilogramos'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'kilogramos'}
-                        onPress = { () => onChangeSetArticle('kilogramos', 'articleWeightType') }
+                    <View style = { styles.container }>
+                        <CheckBox
+                            center
+                            title='Kilogramos'
+                            checkedIcon='dot-circle-o'
+                            uncheckedIcon='circle-o'
+                            containerStyle = { styles.checkbox }
+                            checked={article.articleWeightType === 'kilogramos'}
+                            onPress = { () => onChangeSetArticle('kilogramos', 'articleWeightType') }
+                        />
+                        <CheckBox
+                            center
+                            title='Tiras'
+                            checkedIcon='dot-circle-o'
+                            uncheckedIcon='circle-o'
+                            containerStyle = { styles.checkbox }
+                            checked={article.articleWeightType === 'tiras'}
+                            onPress = { () => onChangeSetArticle('tiras', 'articleWeightType') }
+                        />
+                    </View>
+                    <View style = { styles.container }>
+                        <CheckBox
+                            center
+                            title='Unidades'
+                            checkedIcon='dot-circle-o'
+                            uncheckedIcon='circle-o'
+                            containerStyle = { styles.checkbox }
+                            checked={article.articleWeightType === 'unidades'}
+                            onPress = { () => onChangeSetArticle('unidades', 'articleWeightType') }
+                        />
+                        <CheckBox
+                            center
+                            title='Ganchos'
+                            checkedIcon='dot-circle-o'
+                            uncheckedIcon='circle-o'
+                            containerStyle = { styles.checkbox }
+                            checked={article.articleWeightType === 'ganchos'}
+                            onPress = { () => onChangeSetArticle('ganchos', 'articleWeightType') }
+                        />
+                    </View>
+                    <Input 
+                        placeholder = 'Cantidad'
+                        keyboardType = "numeric"
+                        containerStyle = { styles.input }
+                        onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
+                        defaultValue = { article.articleCount }
                     />
-                    <CheckBox
-                        center
-                        title='Tiras'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'tiras'}
-                        onPress = { () => onChangeSetArticle('tiras', 'articleWeightType') }
-                    />
-                </View>
-                <View style = { styles.container }>
-                    <CheckBox
-                        center
-                        title='Unidades'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'unidades'}
-                        onPress = { () => onChangeSetArticle('unidades', 'articleWeightType') }
-                    />
-                    <CheckBox
-                        center
-                        title='Ganchos'
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        containerStyle = { styles.checkbox }
-                        checked={article.articleWeightType === 'ganchos'}
-                        onPress = { () => onChangeSetArticle('ganchos', 'articleWeightType') }
-                    />
-                </View>
-                <Input 
-                    placeholder = 'Cantidad'
-                    keyboardType = "numeric"
-                    containerStyle = { styles.input }
-                    onChange = { e => onChangeSetArticle(e.nativeEvent.text, 'articleCount') }
-                    defaultValue = { article.articleCount }
-                />
-                {
-                    showAddArticleError && 
-                    <Text style = { styles.textAddArticleError }>
-                        Los campos no pueden ser vacios
-                    </Text>
-                }
-                <Button 
-                    title = { editing? 'Actualizar artículo' : 'Agregar artículo' }
-                    containerStyle = { styles.btnAddArticle }
-                    buttonStyle = { styles.btnSendOrder }
-                    onPress = { () => addArticle() }
-                />
-
-                {
-                    editing && 
+                    {
+                        showAddArticleError && 
+                        <Text style = { styles.textAddArticleError }>
+                            Los campos no pueden ser vacios
+                        </Text>
+                    }
                     <Button 
-                        title = 'Eliminar artículo'
+                        title = { editing? 'Actualizar artículo' : 'Agregar artículo 33' }
                         containerStyle = { styles.btnAddArticle }
-                        buttonStyle = { styles.btnDeleteOrder }
-                        onPress = { () => deleteArticle() }
+                        buttonStyle = { styles.btnSendOrder }
+                        onPress = { () => addArticle() }
                     />
-                }
-            </View>
-        </Overlay>
+
+                    {
+                        editing && 
+                        <Button 
+                            title = 'Eliminar artículo'
+                            containerStyle = { styles.btnAddArticle }
+                            buttonStyle = { styles.btnDeleteOrder }
+                            onPress = { () => deleteArticle() }
+                        />
+                    }
+                </View>
+            </Overlay>
+        </View>
     )
 }
 
@@ -267,7 +272,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: 150,
         alignItems: 'center',
-        marginLeft: 15
+        marginLeft: 10
     },
     container: {
         flexDirection: 'row', 
@@ -279,7 +284,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '90%',
         marginLeft: '5%',
-        marginBottom: 15
+        //marginBottom: 15
     },
     btnSendOrder: {
         backgroundColor: '#00a680'
@@ -305,6 +310,11 @@ const styles = StyleSheet.create({
     dropDown: {
         marginTop: 10,
         marginBottom: 10,
-        zIndex: 1000
+        zIndex: 1000,
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    viewForm: {
+        backgroundColor: 'white'
     }
 })
