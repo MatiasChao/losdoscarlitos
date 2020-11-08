@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidGradleBuildConfiguration">
+    <option name="SYNC_PROJECT_BEFORE_BUILD" value="true" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ebc637cb-856c-4e6f-9b58-129445482594" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,20 +19,31 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GroovyConsoleState">
+    <option name="list">
+      <list>
+        <Entry>
+          <option name="moduleName" value="losdoscarlitos" />
+          <option name="url" value="file://$APPLICATION_CONFIG_DIR$/consoles/groovy/groovy_console.groovy" />
+        </Entry>
+      </list>
+    </option>
+  </component>
   <component name="ProjectId" id="1jWxXShGjlwhLxIIJ70ClsRYQoz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="BundleExportedModule" value="losdoscarlitos" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.customizations" />
+    <property name="settings.editor.selected.configurable" value="gradle.compiler" />
   </component>
   <component name="RunManager">
     <configuration name="Andriod Run" type="AndroidRunConfigurationType" factoryName="Android App">
@@ -144,6 +156,18 @@
       <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <setting name="alternativeJrePathEnabled" value="true" />
+      <setting name="alternativeJrePath" value="Android API 29 Platform" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -159,26 +183,41 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="381" y="23" width="638" height="821" key="#Andriod_Run" timestamp="1604098063749">
+    <state x="381" y="23" width="638" height="821" key="#Andriod_Run" timestamp="1604815268133">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="381" y="23" width="638" height="821" key="#Andriod_Run/0.23.1440.821@0.23.1440.821" timestamp="1604098063749" />
+    <state x="381" y="23" key="#Andriod_Run/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604280009403" />
+    <state x="381" y="23" width="638" height="821" key="#Andriod_Run/0.23.1440.821@0.23.1440.821" timestamp="1604815268133" />
     <state x="188" y="23" width="1024" height="821" key="#Project_Structure" timestamp="1604097614916">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="188" y="23" width="1024" height="821" key="#Project_Structure/0.23.1440.821@0.23.1440.821" timestamp="1604097614916" />
-    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604097692464">
+    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604814946291">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821@0.23.1440.821" timestamp="1604097692463" />
-    <state x="100" y="123" width="1240" height="621" key="AVDManager" timestamp="1604098068916">
+    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604280005275" />
+    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821@0.23.1440.821" timestamp="1604814946291" />
+    <state x="100" y="123" width="1240" height="621" key="AVDManager" timestamp="1604815624613">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="100" y="123" width="1240" height="621" key="AVDManager/0.23.1440.821@0.23.1440.821" timestamp="1604098068916" />
-    <state x="201" y="52" key="SettingsEditor" timestamp="1604098255554">
+    <state x="100" y="123" width="1240" height="621" key="AVDManager/0.23.1440.821@0.23.1440.821" timestamp="1604815624613" />
+    <state x="508" y="182" key="FileChooserDialogImpl" timestamp="1604815303821">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="201" y="52" key="SettingsEditor/0.23.1440.821@0.23.1440.821" timestamp="1604098255554" />
+    <state x="508" y="182" key="FileChooserDialogImpl/0.23.1440.821@0.23.1440.821" timestamp="1604815303820" />
+    <state x="201" y="23" width="1024" height="821" key="SettingsEditor" timestamp="1604815264292">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="0" y="23" width="1440" height="821" key="SettingsEditor/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604280381615" />
+    <state x="201" y="23" width="1024" height="821" key="SettingsEditor/0.23.1440.821@0.23.1440.821" timestamp="1604815264292" />
+    <state x="450" y="172" width="540" height="524" key="StructurePopup" timestamp="1604279407897">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="450" y="172" width="540" height="524" key="StructurePopup/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604279407897" />
+    <state x="503" y="354" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604098334482">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="503" y="354" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.821@0.23.1440.821" timestamp="1604098334482" />
     <state x="392" y="46" width="654" height="735" key="find.popup" timestamp="1604097460958">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
