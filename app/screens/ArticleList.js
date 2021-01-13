@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { ListItem, Text, Overlay, Input, CheckBox, Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -233,7 +233,7 @@ const ArticleModal = (props) => {
                         </Text>
                     }
                     <Button 
-                        title = { editing? 'Actualizar artículo' : 'Agregar artículo 33' }
+                        title = { editing? 'Actualizar artículo' : 'Agregar artículo' }
                         containerStyle = { styles.btnAddArticle }
                         buttonStyle = { styles.btnSendOrder }
                         onPress = { () => addArticle() }
@@ -310,9 +310,12 @@ const styles = StyleSheet.create({
     dropDown: {
         marginTop: 10,
         marginBottom: 10,
-        zIndex: 1000,
+        //zIndex: 1000,
         paddingLeft: 5,
-        paddingRight: 5
+        paddingRight: 5,
+        ...(Platform.OS !== 'android' && {
+            zIndex: 10
+        })
     },
     viewForm: {
         backgroundColor: 'white'

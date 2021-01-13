@@ -1,53 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AndroidGradleBuildConfiguration">
-    <option name="SYNC_PROJECT_BEFORE_BUILD" value="true" />
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ebc637cb-856c-4e6f-9b58-129445482594" name="Default Changelist" comment="">
+    <list default="true" id="0249a332-ce87-4b76-bfd2-5fea0e045d44" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/6.1.1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/losdoscarlitos.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/ArticleList.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/ArticleList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GroovyConsoleState">
-    <option name="list">
-      <list>
-        <Entry>
-          <option name="moduleName" value="losdoscarlitos" />
-          <option name="url" value="file://$APPLICATION_CONFIG_DIR$/consoles/groovy/groovy_console.groovy" />
-        </Entry>
-      </list>
-    </option>
+  <component name="ProjectId" id="1ljyA5IWaRqFQoqCGfNy3u5ldCN" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectId" id="1jWxXShGjlwhLxIIJ70ClsRYQoz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="BundleExportedModule" value="losdoscarlitos" />
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1608124648727" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="gradle.compiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager">
-    <configuration name="Andriod Run" type="AndroidRunConfigurationType" factoryName="Android App">
-      <module name="losdoscarlitos" />
+  <component name="RunManager" selected="Android App.Los2Carlitos">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Los2Carlitos" type="AndroidRunConfigurationType" factoryName="Android App">
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="true" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -99,132 +125,148 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
       <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
-      <module name="losdoscarlitos" />
-      <option name="DEPLOY" value="true" />
-      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
-      <option name="DEPLOY_AS_INSTANT" value="false" />
-      <option name="ARTIFACT_NAME" value="" />
-      <option name="PM_INSTALL_OPTIONS" value="" />
-      <option name="ALL_USERS" value="false" />
-      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
-      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
-      <option name="MODE" value="default_activity" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
-      <option name="FORCE_STOP_RUNNING_APP" value="true" />
-      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <option name="DEBUGGER_TYPE" value="Auto" />
-      <Auto>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-      </Auto>
-      <Hybrid>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-      </Hybrid>
-      <Java />
-      <Native>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-      </Native>
-      <Profilers>
-        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
-        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
-        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-      </Profilers>
-      <option name="DEEP_LINK" value="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
-      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <setting name="path" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workDir" value="file://$PROJECT_DIR$" />
-      <setting name="debug" value="false" />
-      <setting name="alternativeJrePathEnabled" value="true" />
-      <setting name="alternativeJrePath" value="Android API 29 Platform" />
       <method v="2">
-        <option name="Make" enabled="true" />
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="losdoscarlitos" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Android App.Los2Carlitos" />
+      <item itemvalue="Gradle.losdoscarlitos" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ebc637cb-856c-4e6f-9b58-129445482594" name="Default Changelist" comment="" />
-      <created>1603933687512</created>
+      <changelist id="0249a332-ce87-4b76-bfd2-5fea0e045d44" name="Default Changelist" comment="" />
+      <created>1608124648055</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1603933687512</updated>
+      <updated>1608124648055</updated>
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="381" y="23" width="638" height="821" key="#Andriod_Run" timestamp="1604815268133">
+    <state x="401" y="32" key="#Los2Carlitos" timestamp="1610546919919">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="381" y="23" key="#Andriod_Run/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604280009403" />
-    <state x="381" y="23" width="638" height="821" key="#Andriod_Run/0.23.1440.821@0.23.1440.821" timestamp="1604815268133" />
-    <state x="188" y="23" width="1024" height="821" key="#Project_Structure" timestamp="1604097614916">
+    <state x="401" y="32" key="#Los2Carlitos/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610546919919" />
+    <state x="401" y="32" key="#Los2Carlitos/0.23.1440.821@0.23.1440.821" timestamp="1608126812362" />
+    <state x="208" y="23" width="1024" height="821" key="#Project_Structure" timestamp="1608127164293">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="188" y="23" width="1024" height="821" key="#Project_Structure/0.23.1440.821@0.23.1440.821" timestamp="1604097614916" />
-    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604814946291">
+    <state x="208" y="23" width="1024" height="821" key="#Project_Structure/0.23.1440.821@0.23.1440.821" timestamp="1608127164293" />
+    <state x="184" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610547017036">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604280005275" />
-    <state x="164" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821@0.23.1440.821" timestamp="1604814946291" />
-    <state x="100" y="123" width="1240" height="621" key="AVDManager" timestamp="1604815624613">
+    <state x="184" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610547017036" />
+    <state x="184" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.821@0.23.1440.821" timestamp="1608126807740" />
+    <state x="412" y="242" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608125438207">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="100" y="123" width="1240" height="621" key="AVDManager/0.23.1440.821@0.23.1440.821" timestamp="1604815624613" />
-    <state x="508" y="182" key="FileChooserDialogImpl" timestamp="1604815303821">
+    <state x="412" y="242" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.821@0.23.1440.821" timestamp="1608125438207" />
+    <state x="100" y="123" width="1240" height="621" key="AVDManager" timestamp="1610547018915">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="508" y="182" key="FileChooserDialogImpl/0.23.1440.821@0.23.1440.821" timestamp="1604815303820" />
-    <state x="201" y="23" width="1024" height="821" key="SettingsEditor" timestamp="1604815264292">
+    <state x="100" y="123" width="1240" height="621" key="AVDManager/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610547018915" />
+    <state x="100" y="123" width="1240" height="621" key="AVDManager/0.23.1440.821@0.23.1440.821" timestamp="1608127090817" />
+    <state x="512" y="187" key="AndroidProcessChooserDialog" timestamp="1610546922490">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="0" y="23" width="1440" height="821" key="SettingsEditor/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604280381615" />
-    <state x="201" y="23" width="1024" height="821" key="SettingsEditor/0.23.1440.821@0.23.1440.821" timestamp="1604815264292" />
-    <state x="450" y="172" width="540" height="524" key="StructurePopup" timestamp="1604279407897">
+    <state x="512" y="187" key="AndroidProcessChooserDialog/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610546922490" />
+    <state x="512" y="187" key="AndroidProcessChooserDialog/0.23.1440.821@0.23.1440.821" timestamp="1608126665013" />
+    <state x="278" y="23" key="CommitChangelistDialog2" timestamp="1610546834588">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="450" y="172" width="540" height="524" key="StructurePopup/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1604279407897" />
-    <state x="503" y="354" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604098334482">
+    <state x="278" y="23" key="CommitChangelistDialog2/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610546834588" />
+    <state x="569" y="165" key="EnvironmentVariablesDialog" timestamp="1608126592727">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="503" y="354" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.821@0.23.1440.821" timestamp="1604098334482" />
-    <state x="392" y="46" width="654" height="735" key="find.popup" timestamp="1604097460958">
+    <state x="569" y="165" key="EnvironmentVariablesDialog/0.23.1440.821@0.23.1440.821" timestamp="1608126592727" />
+    <state width="1398" height="204" key="GridCell.Tab.0.bottom" timestamp="1610547018826">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="392" y="46" width="654" height="735" key="find.popup/0.23.1440.821@0.23.1440.821" timestamp="1604097460958" />
-    <state x="365" y="168" key="search.everywhere.popup" timestamp="1604097221960">
+    <state width="1398" height="204" key="GridCell.Tab.0.bottom/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610547018826" />
+    <state width="1398" height="204" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1608127797708" />
+    <state width="1398" height="204" key="GridCell.Tab.0.center" timestamp="1610547018826">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
-    <state x="365" y="168" key="search.everywhere.popup/0.23.1440.821@0.23.1440.821" timestamp="1604097221960" />
+    <state width="1398" height="204" key="GridCell.Tab.0.center/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610547018826" />
+    <state width="1398" height="204" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1608127797707" />
+    <state width="1398" height="204" key="GridCell.Tab.0.left" timestamp="1610547018826">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.0.left/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610547018826" />
+    <state width="1398" height="204" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1608127797707" />
+    <state width="1398" height="204" key="GridCell.Tab.0.right" timestamp="1610547018826">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.0.right/0.23.1440.821/-242.-1057.1920.1057@0.23.1440.821" timestamp="1610547018826" />
+    <state width="1398" height="204" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1608127797707" />
+    <state width="1398" height="204" key="GridCell.Tab.1.bottom" timestamp="1608127797709">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.1.bottom/0.23.1440.821@0.23.1440.821" timestamp="1608127797709" />
+    <state width="1398" height="204" key="GridCell.Tab.1.center" timestamp="1608127797708">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.1.center/0.23.1440.821@0.23.1440.821" timestamp="1608127797708" />
+    <state width="1398" height="204" key="GridCell.Tab.1.left" timestamp="1608127797708">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.1.left/0.23.1440.821@0.23.1440.821" timestamp="1608127797708" />
+    <state width="1398" height="204" key="GridCell.Tab.1.right" timestamp="1608127797708">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.1.right/0.23.1440.821@0.23.1440.821" timestamp="1608127797708" />
+    <state x="221" y="72" key="SettingsEditor" timestamp="1608125567897">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="221" y="72" key="SettingsEditor/0.23.1440.821@0.23.1440.821" timestamp="1608125567897" />
+    <state x="412" y="188" width="707" height="490" key="find.popup" timestamp="1608126705643">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="412" y="188" width="707" height="490" key="find.popup/0.23.1440.821@0.23.1440.821" timestamp="1608126705643" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/losdoscarlitos$losdoscarlitos.ic" NAME="losdoscarlitos Coverage Results" MODIFIED="1608126656493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
