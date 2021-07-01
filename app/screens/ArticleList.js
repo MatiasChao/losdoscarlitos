@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Platform } from 'react-native'
-import { ListItem, Text, Overlay, Input, CheckBox, Button } from 'react-native-elements'
+import { ListItem, Text, Overlay, Input, CheckBox, Button, Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import DropDownPicker from 'react-native-dropdown-picker'
 
@@ -91,16 +91,15 @@ export default function ArticleList({ route }) {
         <View>
             <Text h5 style={styles.textTitle}>Puedes ver o modificar los artículos agregados</Text>
 
-            <ListItem
-                title = { 'Agregar artículo' }
-                leftIcon = {{ 
-                    name: "plus",
-                    type: 'material-community'
-                }}
-                chevron
-                containerStyle = { styles.menuItem }
-                onPress = { () => showArticleModalFn() }
-            />
+            <ListItem onPress = { () => showArticleModalFn() }>
+                <Icon name="plus" type="material-community" />
+                <ListItem.Content>
+                    <ListItem.Title>
+                    Agregar artículo
+                    </ListItem.Title>
+                </ListItem.Content>
+                <ListItem.Chevron />
+            </ListItem>
 
             <View style={styles.articleList}>
                 {
@@ -110,17 +109,15 @@ export default function ArticleList({ route }) {
                 
                 {
                     state.listArticle.map((a, idx) => (
-                        <ListItem
-                            key={idx}
-                            title = { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
-                            leftIcon = {{ 
-                                name: "pencil",
-                                type: 'material-community'
-                            }}
-                            chevron
-                            containerStyle = { styles.menuItem }
-                            onPress = {() => showEditModalFn(a, idx)}
-                        />
+                        <ListItem key={idx} onPress = {() => showEditModalFn(a, idx)}>
+                            <Icon name="pencil" type="material-community" />
+                            <ListItem.Content>
+                                <ListItem.Title>
+                                { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
+                                </ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Chevron />
+                        </ListItem>
                     ))
                 }
             </View>
@@ -155,7 +152,7 @@ const ArticleModal = (props) => {
         deleteArticle
     } = props
 
-     const keyboardVerticalOffset = Platform.OS === 'ios' ? '70%' : 0
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? '70%' : 0
 
     return (
         <View>

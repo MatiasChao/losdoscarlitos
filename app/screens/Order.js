@@ -127,20 +127,18 @@ export default function Order ({ route }) {
             </View> 
 
             <View>
-                <ListItem
-                    title = { 'Ver / agregar artículos' }
-                    leftIcon = {{ 
-                        name: "cart",
-                        type: 'material-community'
-                    }}
-                    chevron
-                    containerStyle = { styles.menuItem }
-                    onPress={() => nagivation.navigate('articleList', {
-                        setState: setState,
-                        state: state
-                    })}
-                    disabledStyle={{backgroundColor: '#f2f2f2' }}
-                />
+                <ListItem onPress={() => nagivation.navigate('articleList', {
+                    setState: setState,
+                    state: state
+                })}>
+                    <Icon name="cart" type="material-community" />
+                    <ListItem.Content>
+                        <ListItem.Title>
+                            Ver y/o agregar artículos
+                        </ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
             </View>
 
             <View style={{alignItems: 'center'}}>

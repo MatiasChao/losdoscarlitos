@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
@@ -16,9 +16,10 @@ export default function LoginForm (props) {
     const [formData, setFormData] = useState(defaultFormDataValue())
     const [loading, setLoading] = useState(false)
     const nagivation = useNavigation()
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? '70%' : 0
 
     const onChange = (e, type) => {
-        setFormData({ ...formData, [type]: e.nativeEvent.text })
+        setFormData({ ...formData, [type]: e.nativeEvent.text.toLowerCase() })
     }
 
     const onSubmit = () => {
@@ -43,45 +44,49 @@ export default function LoginForm (props) {
     }
 
     return (
-        <View style={styles.formContainer}>
-            <Input
-                placeholder = 'Correo electronico'
-                containerStyle = { styles.inputForm }
-                onChange = { e => onChange(e, 'email') }
-                rightIcon = { 
-                    <Icon 
-                        type = 'material-community'
-                        name = 'at' 
-                        iconStyle = { styles.iconRight }
+        // <Overlay avoidKeyboard={true} overlayStyle={{ height: keyboardVerticalOffset}}>
+        //     <KeyboardAwareScrollView>   
+                <View style={styles.formContainer}>
+                    <Input
+                        placeholder = 'Correo electronico'
+                        containerStyle = { styles.inputForm }
+                        onChange = { e => onChange(e, 'email') }
+                        rightIcon = { 
+                            <Icon 
+                                type = 'material-community'
+                                name = 'at' 
+                                iconStyle = { styles.iconRight }
+                            />
+                        }
                     />
-                }
-            />
-            <Input 
-                placeholder = 'Contraseña'
-                containerStyle = { styles.inputForm }
-                password = { true }
-                secureTextEntry = { showPassword ? false : true }
-                onChange = { e => onChange(e, 'password') }
-                rightIcon = { 
-                    <Icon 
-                        type = 'material-community'
-                        name = { showPassword ? 'eye-off-outline' : 'eye-outline' }
-                        iconStyle = { styles.iconRight }
-                        onPress = { () => setShowPassword(!showPassword) }
+                    <Input 
+                        placeholder = 'Contraseña'
+                        containerStyle = { styles.inputForm }
+                        password = { true }
+                        secureTextEntry = { showPassword ? false : true }
+                        onChange = { e => onChange(e, 'password') }
+                        rightIcon = { 
+                            <Icon 
+                                type = 'material-community'
+                                name = { showPassword ? 'eye-off-outline' : 'eye-outline' }
+                                iconStyle = { styles.iconRight }
+                                onPress = { () => setShowPassword(!showPassword) }
+                            />
+                        }
                     />
-                }
-            />
-            <Button 
-                title = 'Iniciar sesión'
-                containerStyle = { styles.btnContainerLogin }
-                buttonStyle = { styles.btnLogin }
-                onPress = { onSubmit }
-            />
-            <Loading 
-                isVisible = { loading } 
-                text = 'Iniciando sesión'
-            />
-        </View>
+                    <Button 
+                        title = 'Iniciar sesión'
+                        containerStyle = { styles.btnContainerLogin }
+                        buttonStyle = { styles.btnLogin }
+                        onPress = { onSubmit }
+                    />
+                    <Loading 
+                        isVisible = { loading } 
+                        text = 'Iniciando sesión'
+                    />
+                </View>
+        //     </KeyboardAwareScrollView>
+        // </Overlay>
     )
 }
 
@@ -96,8 +101,7 @@ const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 30
+        justifyContent: 'center'
     },
     inputForm: {
         width: '100%',

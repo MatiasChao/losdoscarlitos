@@ -17,7 +17,7 @@ export default function Login() {
                 resizeMode = 'contain'
                 style = { styles.logo }
             />
-            <KeyboardAwareScrollView style = { styles.viewCointainer }>
+            <View style = { styles.viewCointainer }>
                 <LoginForm 
                     toastRef = { toastRef }
                 />
@@ -29,7 +29,7 @@ export default function Login() {
                      */
                 }
                 
-            </KeyboardAwareScrollView>
+            </View>
             {
                 /**
                  * <Divider style = { styles.divider } />
@@ -64,8 +64,8 @@ function CreateAccount() {
 const styles = StyleSheet.create({
     logo: {
         width: '100%',
-        height: 150,
-        marginTop: 20
+        height: 130,
+        marginTop: 10
     },
     viewCointainer: {
         marginRight: 40,

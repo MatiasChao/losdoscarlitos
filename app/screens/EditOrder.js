@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import { View, StyleSheet, Text, ScrollView, SafeAreaView, Platform} from 'react-native'
 import { Input, Button, ListItem, Overlay, CheckBox, Icon } from 'react-native-elements'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -161,23 +161,21 @@ export default function EditOrder({ route }) {
                         
                         {
                             order.listArticle.map((a, idx) => (
-                                <ListItem
-                                    key={idx}
-                                    title = { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
-                                    leftIcon = {{ 
-                                        name: "pencil",
-                                        type: 'material-community'
-                                    }}
-                                    chevron
-                                    containerStyle = { styles.menuItem }
-                                    onPress = {() => showEditModalFn(a, idx)}
-                                />
+                                <ListItem key={idx} onPress = {() => showEditModalFn(a, idx)} style={{marginBottom: 5}}>
+                                    <Icon name="pencil" type="material-community" />
+                                    <ListItem.Content>
+                                        <ListItem.Title>
+                                            { a.articleName + " - " + a.articleCount + " " + a.articleWeightType }
+                                        </ListItem.Title>
+                                    </ListItem.Content>
+                                    <ListItem.Chevron />
+                                </ListItem>
                             ))
                         }
                     </View>
 
                     <Button 
-                        title = 'artículo'
+                        title = 'agregar artículo'
                         containerStyle = { styles.btnAddArticleMain }
                         buttonStyle = { styles.btnSendOrder }
                         onPress = { addNewArticleFn }
@@ -257,8 +255,10 @@ const ArticleModal = (props) => {
         products
     } = props
 
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? '70%' : 0
+
     return (
-        <Overlay isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)} overlayStyle = { styles.overlayContainer }>
+        <Overlay avoidKeyboard={true} isVisible={showArticleModal} onBackdropPress={() => setShowArticleModal(!showArticleModal)} overlayStyle={{ height: keyboardVerticalOffset}}>
             <KeyboardAwareScrollView>   
                 <View style = { styles.dropDown }>
                     <DropDownPicker
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#00a680'
     },
     btnAddArticleMain: {
-        width: '26%',
+        width: '45%',
         marginLeft: '10%',
         marginBottom: 10
     },

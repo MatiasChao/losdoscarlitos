@@ -62,12 +62,11 @@ export default function AccountOptions (props) {
                     <ListItem
                         key = { idx }
                         title = { menu.title }
-                        leftIcon = {{ 
-                            type: menu.iconType, 
-                            name: menu.iconNameLeft, 
-                            color: menu.iconColorLeft 
-                        }}
-                        chevron
+                        // leftIcon = {{ 
+                        //     type: menu.iconType, 
+                        //     name: menu.iconNameLeft, 
+                        //     color: menu.iconColorLeft 
+                        // }}
                         containerStyle = { styles.menuItem }
                         onPress = { menu.onPress }
                     />
