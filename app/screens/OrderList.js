@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import moment from 'moment'
 
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -19,6 +20,9 @@ export default function OrderList() {
     const [userLogged, setUserLogged] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const limitOrders = 10
+
+    // var today = new DateTime.now();
+    // today = new DateTime(today.year, today.month, today.day);
 
     firebase
     .auth()
@@ -39,6 +43,9 @@ export default function OrderList() {
     const getOrdersByUser = (idUser) => {
         const resultOrders = []
 
+        var ts = Math.round(new Date().getTime() / 1000);
+        var tsYesterday = ts - (24 * 3600);
+
         db.collection('orders')
             .where('createById', '==', idUser)
             .orderBy('createDate', 'desc')
@@ -49,7 +56,10 @@ export default function OrderList() {
                 response.forEach((doc) => {
                     const order = doc.data()
                     order.id = doc.id
-                    resultOrders.push(order)
+                    if(tsYesterday <= order.createDate.seconds) {
+                        resultOrders.push(order)
+                    }
+                    
                 })
                 setOrders(resultOrders)
                 setIsLoading(false)
